@@ -171,6 +171,25 @@ export class QuickAddComponent extends Component {
   };
 
   /**
+   * Path + query on the current storefront (avoids absolute URLs to another host).
+   * @param {string} productPageUrl
+   */
+  #productPathAndSearch(productPageUrl) {
+    const url = new URL(productPageUrl, window.location.href);
+    return `${url.pathname}${url.search}`;
+  }
+
+  /**
+   * Section Rendering API: must match the **key** of the main block in `templates/product.json` (Horizon default: `main`).
+   * @see https://shopify.dev/docs/api/ajax/section-rendering
+   * @param {string} pathAndSearch
+   */
+  #withSectionRenderParam(pathAndSearch) {
+    const joiner = pathAndSearch.includes('?') ? '&' : '?';
+    return `${pathAndSearch}${joiner}section_id=main`;
+  }
+
+  /**
    * Fetches the product page content
    * @param {string} productPageUrl - The URL of the product page to fetch
    * @returns {Promise<Document | null>}
@@ -183,6 +202,12 @@ export class QuickAddComponent extends Component {
     this.#abortController = new AbortController();
     const { signal } = this.#abortController;
 
+    const fetchOpts = /** @type {RequestInit} */ ({
+      signal,
+      credentials: 'same-origin',
+      redirect: 'follow',
+    });
+
     /**
      * @param {Response} response
      * @returns {Promise<Document | null>}
@@ -193,17 +218,30 @@ export class QuickAddComponent extends Component {
       return new DOMParser().parseFromString(responseText, 'text/html');
     };
 
-    try {
-      let response = await fetch(productPageUrl, { signal });
+    /**
+     * @param {string} pathAndSearch
+     */
+    const fetchFirstOk = async (pathAndSearch) => {
+      let response = await fetch(pathAndSearch, fetchOpts);
       let html = await parseOkHtml(response);
+      if (html?.querySelector('[data-product-grid-content]')) return html;
+
+      // Fallback: Section Rendering (`section_id` = key in `templates/product.json`, default `main`).
+      response = await fetch(this.#withSectionRenderParam(pathAndSearch), fetchOpts);
+      html = await parseOkHtml(response);
+      return html?.querySelector('[data-product-grid-content]') ? html : null;
+    };
+
+    try {
+      const primaryPath = this.#productPathAndSearch(productPageUrl);
+      let html = await fetchFirstOk(primaryPath);
 
       // Stale cards may still link to a removed variant; PDP without variant can still resolve.
-      if (!html && productPageUrl.includes('variant=')) {
-        const url = new URL(productPageUrl, window.location.origin);
+      if (!html && primaryPath.includes('variant=')) {
+        const url = new URL(primaryPath, window.location.href);
         url.searchParams.delete('variant');
-        const bareUrl = `${url.pathname}${url.search}`;
-        response = await fetch(bareUrl, { signal });
-        html = await parseOkHtml(response);
+        const barePath = `${url.pathname}${url.search}`;
+        html = await fetchFirstOk(barePath);
       }
 
       return html;

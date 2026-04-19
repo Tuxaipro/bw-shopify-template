@@ -22,10 +22,10 @@ export class QuickAddComponent extends Component {
 
     if (!productLink?.href) return '';
 
-    const url = new URL(productLink.href);
+    const url = new URL(productLink.href, window.location.href);
 
     if (url.searchParams.has('variant')) {
-      return url.toString();
+      return this.#sameOriginProductUrl(url);
     }
 
     const selectedVariantId = this.#getSelectedVariantId();
@@ -33,6 +33,18 @@ export class QuickAddComponent extends Component {
       url.searchParams.set('variant', selectedVariantId);
     }
 
+    return this.#sameOriginProductUrl(url);
+  }
+
+  /**
+   * Fetch must hit the storefront you are on (preview, primary domain, etc.).
+   * Cards sometimes keep an absolute URL from another host after imports or edits.
+   * @param {URL} url
+   */
+  #sameOriginProductUrl(url) {
+    if (url.origin !== window.location.origin) {
+      return `${url.pathname}${url.search}`;
+    }
     return url.toString();
   }
 

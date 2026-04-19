@@ -113,6 +113,24 @@
     </div>
   {% endif %}
 
+  {% if settings.breezyweaves_wishlist_url != blank %}
+    <a
+      href="{{ settings.breezyweaves_wishlist_url }}"
+      class="header-actions__action header-actions__wishlist button-unstyled{% if display_style == 'text' %} header-actions__text-style{% endif %}"
+      aria-label="{{ 'accessibility.wishlist' | t }}"
+    >
+      <span class="{% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}">
+        {{ 'accessibility.wishlist' | t }}
+      </span>
+      <span
+        class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}"
+        aria-hidden="true"
+      >
+        {{- 'icon-wishlist.svg' | inline_asset_content -}}
+      </span>
+    </a>
+  {% endif %}
+
   {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
     <script
       src="{{ 'cart-drawer.js' | asset_url }}"

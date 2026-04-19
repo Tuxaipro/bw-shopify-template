@@ -74,6 +74,12 @@
         "id": "breezyweaves_show_whatsapp_button",
         "label": "Show floating WhatsApp button",
         "default": true
+      },
+      {
+        "type": "url",
+        "id": "breezyweaves_wishlist_url",
+        "label": "Wishlist page URL",
+        "info": "Paste your wishlist app page or collection URL. Leave blank to hide the heart icon in the header."
       }
     ]
   },

@@ -116,7 +116,9 @@
                 style="{% render 'submenu-font-styles', settings: block_settings %}"
               >
                 {% assign list_id = 'MegaMenuList-' | append: forloop.index %}
-                <div class="mega-menu section section--full-width-margin section--{{ section.settings.section_width }}">
+                <div
+                  class="mega-menu section section--full-width-margin section--{{ section.settings.section_width }}{% if menu_content_type == 'text' %} mega-menu--text-only{% endif %}"
+                >
                   <div
                     class="mega-menu__grid"
                     data-menu-grid-id="{{ list_id }}"
@@ -591,6 +593,45 @@
     @media screen and (min-width: 990px) {
       grid-template-columns: repeat(var(--menu-columns-desktop), minmax(0, 1fr));
     }
+  }
+
+  /*
+    Flat link lists (e.g. "Collections" → six category links with no grandchildren) render as a
+    single mega-menu column but still span the full multi-column grid, leaving a huge empty panel.
+    Collapse to a compact panel when there is only one column of text links and no featured strip.
+  */
+  .mega-menu--text-only .mega-menu__grid:has(.mega-menu__list > .mega-menu__column:only-child) {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    max-width: min(100vw - var(--padding-inline) * 2, 28rem);
+    gap: var(--gap-sm);
+  }
+
+  .mega-menu--text-only .mega-menu__grid:has(.mega-menu__list > .mega-menu__column:only-child) .mega-menu__list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    grid-column: unset;
+    grid-template-columns: unset;
+    gap: var(--gap-2xs);
+  }
+
+  .mega-menu--text-only .mega-menu__grid:has(.mega-menu__list > .mega-menu__column:only-child) .mega-menu__column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-3xs);
+    min-width: 0;
+  }
+
+  .mega-menu--text-only .mega-menu__grid:has(.mega-menu__list > .mega-menu__column:only-child) .mega-menu__column > div {
+    width: 100%;
+  }
+
+  .menu-list__submenu-inner:has(.mega-menu--text-only .mega-menu__grid:has(.mega-menu__list > .mega-menu__column:only-child)) {
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 
   .mega-menu__column {

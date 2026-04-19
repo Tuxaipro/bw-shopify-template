@@ -19,10 +19,10 @@
           "settings": {
             "text": "Free shipping across the US · Processing in 48 hours · Feel the Fashion, Wear the Breeze",
             "link": "",
-            "font": "var(--font-subheading--family)",
-            "font_size": "0.75rem",
+            "font": "var(--font-body--family)",
+            "font_size": "0.625rem",
             "weight": "",
-            "letter_spacing": "normal",
+            "letter_spacing": "tight",
             "case": "none"
           },
           "blocks": {}
@@ -35,7 +35,7 @@
       "settings": {
         "speed": 5,
         "section_width": "page-width",
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-2",
         "divider_width": 1,
         "padding-block-start": 15,
         "padding-block-end": 15
@@ -59,7 +59,7 @@
           "static": true,
           "settings": {
             "menu": "main-menu",
-            "color_scheme": "",
+            "color_scheme": "scheme-1",
             "type_font_primary_size": "0.875rem",
             "menu_font_style": "inverse",
             "type_font_primary_link": "body",

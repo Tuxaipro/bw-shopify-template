@@ -113,9 +113,8 @@ export class QuickAddComponent extends Component {
       const freshContent = /** @type {Element} */ (productGrid.cloneNode(true));
       await this.updateQuickAddModal(freshContent);
       this.#updateVariantPicker(productGrid);
+      this.#openQuickAddModal();
     }
-
-    this.#openQuickAddModal();
   };
 
   #resetScroll() {
@@ -170,26 +169,36 @@ export class QuickAddComponent extends Component {
     // We use this to abort the previous fetch request if it's still pending.
     this.#abortController?.abort();
     this.#abortController = new AbortController();
+    const { signal } = this.#abortController;
+
+    /**
+     * @param {Response} response
+     * @returns {Promise<Document | null>}
+     */
+    const parseOkHtml = async (response) => {
+      if (!response.ok) return null;
+      const responseText = await response.text();
+      return new DOMParser().parseFromString(responseText, 'text/html');
+    };
 
     try {
-      const response = await fetch(productPageUrl, {
-        signal: this.#abortController.signal,
-      });
+      let response = await fetch(productPageUrl, { signal });
+      let html = await parseOkHtml(response);
 
-      if (!response.ok) {
-        throw new Error(`Failed to fetch product page: HTTP error ${response.status}`);
+      // Stale cards may still link to a removed variant; PDP without variant can still resolve.
+      if (!html && productPageUrl.includes('variant=')) {
+        const url = new URL(productPageUrl, window.location.origin);
+        url.searchParams.delete('variant');
+        const bareUrl = `${url.pathname}${url.search}`;
+        response = await fetch(bareUrl, { signal });
+        html = await parseOkHtml(response);
       }
-
-      const responseText = await response.text();
-      const html = new DOMParser().parseFromString(responseText, 'text/html');
 
       return html;
     } catch (error) {
-      if (error.name === 'AbortError') {
-        return null;
-      } else {
-        throw error;
-      }
+      if (error.name === 'AbortError') return null;
+      console.warn('[quick-add] Failed to fetch product page', productPageUrl, error);
+      return null;
     } finally {
       this.#abortController = null;
     }

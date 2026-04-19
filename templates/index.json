@@ -655,17 +655,6 @@
         "padding-block-start": 32,
         "padding-block-end": 40
       }
-    },
-    "custom_instagram_cta": {
-      "type": "custom-liquid",
-      "name": "Instagram",
-      "settings": {
-        "custom_liquid": "<div class=\"breezy-instagram-cta\">\n  <h2>On Instagram</h2>\n  <p>Follow <a href=\"https://www.instagram.com/breezy_weaves\" target=\"_blank\" rel=\"noopener\">@breezy_weaves</a> for new drops, styling ideas, and behind-the-scenes.</p>\n  <a class=\"button\" href=\"https://www.instagram.com/breezy_weaves\" target=\"_blank\" rel=\"noopener\">View on Instagram</a>\n  <p class=\"breezy-instagram-cta__note\">Tip: add an Instagram sales channel app later for a live feed.</p>\n</div>",
-        "color_scheme": "scheme-2",
-        "section_width": "page-width",
-        "padding-block-start": 24,
-        "padding-block-end": 56
-      }
     }
   },
   "order": [
@@ -673,7 +662,6 @@
     "collection_grid_breezy",
     "product_list_new_arrivals",
     "product_list_bestsellers",
-    "custom_fabric_story",
-    "custom_instagram_cta"
+    "custom_fabric_story"
   ]
 }

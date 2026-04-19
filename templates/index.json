@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "hero_jVaWmY": {
       "type": "hero",
@@ -65,6 +66,7 @@
         "custom_mobile_media": false,
         "media_type_1_mobile": "image",
         "media_type_2_mobile": "image",
+        "link": "",
         "open_in_new_tab": false,
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -79,7 +81,7 @@
         "section_height_custom": 50,
         "color_scheme": "scheme-6",
         "toggle_overlay": true,
-        "overlay_color": "#3D151099",
+        "overlay_color": "#3d151099",
         "overlay_style": "solid",
         "gradient_direction": "to bottom",
         "blurred_reflection": false,
@@ -135,6 +137,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
+                "text": "<h2>Shop by category</h2><p>Sarees, dresses, lehengas, kurtis, and more—assign your collections in the theme editor.</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -152,8 +155,7 @@
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0,
-                "text": "<h2>Shop by category</h2><p>Sarees, dresses, lehengas, kurtis, and more\u2014assign your collections in the theme editor.</p>"
+                "padding-inline-end": 0
               },
               "blocks": {}
             }
@@ -167,9 +169,10 @@
           "name": "t:names.collection_card",
           "static": true,
           "settings": {
+            "placement": "on_image",
             "horizontal_alignment": "flex-start",
             "vertical_alignment": "flex-end",
-            "placement": "on_image",
+            "collection_card_gap": 8,
             "inherit_color_scheme": true,
             "color_scheme": "",
             "border": "none",
@@ -178,18 +181,13 @@
             "border_radius": 4
           },
           "blocks": {
-            "collection-card-image": {
-              "type": "_collection-card-image",
-              "name": "t:names.collection_card_image",
-              "static": true,
-              "settings": {
-                "image_ratio": "portrait"
-              }
-            },
             "collection-title": {
               "type": "collection-title",
               "name": "t:names.collection_title",
               "settings": {
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
                 "type_preset": "rte",
                 "font": "var(--font-heading--family)",
                 "font_size": "",
@@ -197,16 +195,33 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
+                "color": "var(--color-foreground)",
                 "background": true,
-                "background_color": "#FFFFFF",
+                "background_color": "#ffffff",
+                "corner_radius": 0,
                 "padding-block-start": 4,
                 "padding-block-end": 4,
                 "padding-inline-start": 8,
                 "padding-inline-end": 8
-              }
+              },
+              "blocks": {}
+            },
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "name": "t:names.collection_card_image",
+              "static": true,
+              "settings": {
+                "image_ratio": "portrait",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -219,14 +234,20 @@
       ],
       "name": "Category tiles",
       "settings": {
-        "collection_list": [],
+        "collection_list": [
+          "chudidhar-sets",
+          "indo-western",
+          "sarees"
+        ],
         "layout_type": "grid",
         "carousel_on_mobile": true,
         "columns": 3,
         "mobile_columns": "2",
         "mobile_card_size": "44cqw",
         "columns_gap": 12,
+        "bento_gap": 8,
         "rows_gap": 16,
+        "max_collections": 4,
         "icons_style": "arrow",
         "icons_shape": "none",
         "section_width": "page-width",
@@ -277,6 +298,7 @@
               "type": "_product-list-text",
               "name": "t:names.collection_title",
               "settings": {
+                "text": "<h3>New arrivals</h3>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -294,8 +316,7 @@
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0,
-                "text": "<h3>New arrivals</h3>"
+                "padding-inline-end": 0
               },
               "blocks": {}
             },
@@ -471,6 +492,7 @@
               "type": "_product-list-text",
               "name": "t:names.collection_title",
               "settings": {
+                "text": "<h3>Bestsellers</h3>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -488,8 +510,7 @@
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0,
-                "text": "<h3>Bestsellers</h3>"
+                "padding-inline-end": 0
               },
               "blocks": {}
             },
@@ -628,7 +649,7 @@
       "type": "custom-liquid",
       "name": "Our fabrics",
       "settings": {
-        "custom_liquid": "\n<div class=\"breezy-fabric-story\">\n  <h2 class=\"breezy-fabric-story__title\">Our fabrics</h2>\n  <p class=\"breezy-fabric-story__lede\">Breathable materials chosen for drape, comfort, and quiet luxury.</p>\n  <div class=\"breezy-fabric-grid\">\n    <article class=\"breezy-fabric-card\"><h3>Silk</h3><p>Natural sheen and fluid movement for celebrations and evenings out.</p></article>\n    <article class=\"breezy-fabric-card\"><h3>Cotton</h3><p>Soft, airy, and easy\u2014ideal for everyday kurtis and relaxed silhouettes.</p></article>\n    <article class=\"breezy-fabric-card\"><h3>Crepe</h3><p>Lightweight texture that skims the body with a refined matte finish.</p></article>\n    <article class=\"breezy-fabric-card\"><h3>Viscose</h3><p>Fluid drape with a gentle hand\u2014perfect for travel-friendly pieces.</p></article>\n    <article class=\"breezy-fabric-card\"><h3>Georgette</h3><p>Sheer structure with graceful flow for layered and Indo-western looks.</p></article>\n  </div>\n</div>\n",
+        "custom_liquid": "<div class=\"breezy-fabric-story\">\n  <h2 class=\"breezy-fabric-story__title\">Our fabrics</h2>\n  <p class=\"breezy-fabric-story__lede\">Breathable materials chosen for drape, comfort, and quiet luxury.</p>\n  <div class=\"breezy-fabric-grid\">\n    <article class=\"breezy-fabric-card\"><h3>Silk</h3><p>Natural sheen and fluid movement for celebrations and evenings out.</p></article>\n    <article class=\"breezy-fabric-card\"><h3>Cotton</h3><p>Soft, airy, and easy—ideal for everyday kurtis and relaxed silhouettes.</p></article>\n    <article class=\"breezy-fabric-card\"><h3>Crepe</h3><p>Lightweight texture that skims the body with a refined matte finish.</p></article>\n    <article class=\"breezy-fabric-card\"><h3>Viscose</h3><p>Fluid drape with a gentle hand—perfect for travel-friendly pieces.</p></article>\n    <article class=\"breezy-fabric-card\"><h3>Georgette</h3><p>Sheer structure with graceful flow for layered and Indo-western looks.</p></article>\n  </div>\n</div>",
         "color_scheme": "scheme-1",
         "section_width": "page-width",
         "padding-block-start": 32,
@@ -639,7 +660,7 @@
       "type": "custom-liquid",
       "name": "Instagram",
       "settings": {
-        "custom_liquid": "\n<div class=\"breezy-instagram-cta\">\n  <h2>On Instagram</h2>\n  <p>Follow <a href=\"https://www.instagram.com/breezy_weaves\" target=\"_blank\" rel=\"noopener\">@breezy_weaves</a> for new drops, styling ideas, and behind-the-scenes.</p>\n  <a class=\"button\" href=\"https://www.instagram.com/breezy_weaves\" target=\"_blank\" rel=\"noopener\">View on Instagram</a>\n  <p class=\"breezy-instagram-cta__note\">Tip: add an Instagram sales channel app later for a live feed.</p>\n</div>\n",
+        "custom_liquid": "<div class=\"breezy-instagram-cta\">\n  <h2>On Instagram</h2>\n  <p>Follow <a href=\"https://www.instagram.com/breezy_weaves\" target=\"_blank\" rel=\"noopener\">@breezy_weaves</a> for new drops, styling ideas, and behind-the-scenes.</p>\n  <a class=\"button\" href=\"https://www.instagram.com/breezy_weaves\" target=\"_blank\" rel=\"noopener\">View on Instagram</a>\n  <p class=\"breezy-instagram-cta__note\">Tip: add an Instagram sales channel app later for a live feed.</p>\n</div>",
         "color_scheme": "scheme-2",
         "section_width": "page-width",
         "padding-block-start": 24,

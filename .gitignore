@@ -1,0 +1,30 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs and env
+*.log
+.env
+.env.*
+
+# Node (if you add a theme build later)
+node_modules/
+
+# Shopify CLI (local auth / cache)
+.shopify/
+
+# Personal notes (not for the repo)
+mynotes.md
+Idea.md

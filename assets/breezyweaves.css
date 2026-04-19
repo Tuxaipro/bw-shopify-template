@@ -1,0 +1,184 @@
+/**
+ * Breezyweaves — brand layer on Horizon (Idea.md §3, §5).
+ * Color tokens come from Theme settings color schemes; this file handles layout + component polish.
+ */
+
+/* --- Announcement bar (burgundy scheme) --- */
+.color-scheme-5 .announcement-bar,
+.color-scheme-5 .announcement-bar__text,
+.color-scheme-5 .announcement-bar__link {
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+.color-scheme-5 .announcement-bar__slides {
+  max-width: 100%;
+}
+
+/* --- Homepage: fabric story --- */
+.breezy-fabric-story__title {
+  font-family: var(--font-heading--family);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  margin: 0 0 0.5rem;
+}
+
+.breezy-fabric-story__lede {
+  color: rgb(var(--color-foreground-rgb) / 0.85);
+  max-width: 42rem;
+  margin: 0 0 1.75rem;
+  line-height: 1.6;
+}
+
+.breezy-fabric-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media screen and (min-width: 750px) {
+  .breezy-fabric-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .breezy-fabric-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.breezy-fabric-card {
+  background: rgb(var(--color-background-rgb));
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 1rem 1.1rem;
+  box-shadow: 0 2px 12px rgba(139, 30, 14, 0.06);
+}
+
+.breezy-fabric-card h3 {
+  font-family: var(--font-heading--family);
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0 0.35rem;
+}
+
+.breezy-fabric-card p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: rgb(var(--color-foreground-rgb) / 0.88);
+}
+
+/* --- Instagram CTA block --- */
+.breezy-instagram-cta h2 {
+  font-family: var(--font-heading--family);
+  font-weight: 500;
+  margin: 0 0 0.5rem;
+}
+
+.breezy-instagram-cta p {
+  margin: 0 0 1rem;
+  line-height: 1.6;
+}
+
+.breezy-instagram-cta .button {
+  display: inline-block;
+}
+
+.breezy-instagram-cta__note {
+  margin-top: 1rem !important;
+  font-size: 0.8125rem;
+  opacity: 0.85;
+}
+
+/* --- Product cards: subtle lift (Idea §6) --- */
+.resource-list__item .product-card,
+.resource-list__item .card-product {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+@media (hover: hover) {
+  .resource-list__item .product-card:hover,
+  .resource-list__item .card-product:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(139, 30, 14, 0.1);
+  }
+}
+
+/* --- Size chart modal --- */
+.breezy-size-chart-dialog {
+  max-width: min(92vw, 720px);
+  padding: 0;
+  border: 1px solid var(--color-border, #e8dec6);
+  border-radius: 6px;
+  background: var(--color-background, #fff);
+  color: var(--color-foreground, #1a1a1a);
+}
+
+.breezy-size-chart-dialog::backdrop {
+  background: rgba(26, 26, 26, 0.45);
+}
+
+.breezy-size-chart-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-border, #e8dec6);
+}
+
+.breezy-size-chart-dialog__header h2 {
+  margin: 0;
+  font-family: var(--font-heading--family);
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.breezy-size-chart-dialog__body {
+  padding: 1rem 1.25rem 1.25rem;
+  max-height: 70vh;
+  overflow: auto;
+}
+
+.breezy-size-chart-dialog__note {
+  font-size: 0.8125rem;
+  opacity: 0.88;
+  margin: 0 0 1rem;
+}
+
+.breezy-size-chart-table-wrap {
+  margin-bottom: 1.25rem;
+}
+
+.breezy-size-chart-table-wrap h3 {
+  font-family: var(--font-heading--family);
+  font-size: 0.95rem;
+  margin: 0 0 0.35rem;
+}
+
+.breezy-size-chart-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.breezy-size-chart-table th,
+.breezy-size-chart-table td {
+  border: 1px solid var(--color-border, #e8dec6);
+  padding: 0.35rem 0.5rem;
+  text-align: center;
+}
+
+.breezy-size-chart-table th {
+  background: rgb(var(--color-foreground-rgb) / 0.05);
+  font-weight: 600;
+}
+
+button.breezy-size-chart-open {
+  margin-bottom: 0.75rem;
+}

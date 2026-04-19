@@ -9,9 +9,8 @@
  */
 {
   "current": {
-    "logo": "shopify://shop_images/logo-with-red.png",
-    "logo_inverse": "shopify://shop_images/White_logo_-_no_background.png",
-    "logo_height": 59,
+    "logo": "shopify://shop_images/logo-with-red-HZ.png",
+    "logo_height": 50,
     "logo_height_mobile": 28,
     "favicon": "shopify://shop_images/iPhone.png",
     "breezyweaves_whatsapp_url": "",

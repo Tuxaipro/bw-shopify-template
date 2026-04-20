@@ -104,10 +104,10 @@
         "padding-block-end": 0
       }
     },
-    "collection_list_n6KVqY": {
+    "collection_grid_breezy": {
       "type": "collection-list",
       "blocks": {
-        "group_YK9pFj": {
+        "group_cat_header": {
           "type": "group",
           "name": "t:names.header",
           "settings": {
@@ -147,63 +147,16 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_mKwhrK": {
+            "text_cat_hdr": {
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h3>Shop by collection</h3>",
+                "text": "<h2>Shop by category.</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 16,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_mKwhrK"
-          ]
-        },
-        "static-collection-card": {
-          "type": "_collection-card",
-          "name": "t:names.collection_card",
-          "static": true,
-          "settings": {
-            "placement": "below_image",
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "collection_card_gap": 8,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0
-          },
-          "blocks": {
-            "collection_title_phWUwk": {
-              "type": "collection-title",
-              "name": "t:names.collection_title",
-              "settings": {
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
+                "type_preset": "h4",
+                "font": "var(--font-heading--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
@@ -219,13 +172,60 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_cat_hdr"
+          ]
+        },
+        "static-collection-card": {
+          "type": "_collection-card",
+          "name": "t:names.collection_card",
+          "static": true,
+          "settings": {
+            "placement": "on_image",
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-end",
+            "collection_card_gap": 9,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 31
+          },
+          "blocks": {
+            "collection-title": {
+              "type": "collection-title",
+              "name": "t:names.collection_title",
+              "settings": {
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-heading--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": true,
+                "background_color": "#ffffff",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 4,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
+              },
+              "blocks": {}
             },
             "collection-card-image": {
               "type": "_collection-card-image",
               "name": "t:names.collection_card_image",
               "static": true,
               "settings": {
-                "image_ratio": "adapt",
+                "image_ratio": "portrait",
                 "toggle_overlay": false,
                 "overlay_color": "#00000026",
                 "overlay_style": "solid",
@@ -239,39 +239,36 @@
             }
           },
           "block_order": [
-            "collection_title_phWUwk"
+            "collection-title"
           ]
         }
       },
       "block_order": [
-        "group_YK9pFj"
+        "group_cat_header"
       ],
-      "name": "t:names.collections_carousel",
+      "name": "Category tiles",
       "settings": {
         "collection_list": [
           "chudidhar-sets",
-          "dresses",
           "indo-western",
-          "kurtis",
-          "lehengas",
           "sarees"
         ],
-        "layout_type": "carousel",
-        "carousel_on_mobile": false,
+        "layout_type": "grid",
+        "carousel_on_mobile": true,
         "columns": 3,
         "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
+        "mobile_card_size": "44cqw",
+        "columns_gap": 12,
         "bento_gap": 8,
-        "rows_gap": 8,
+        "rows_gap": 16,
         "max_collections": 4,
         "icons_style": "arrow",
-        "icons_shape": "circle",
+        "icons_shape": "none",
         "section_width": "page-width",
-        "gap": 12,
-        "color_scheme": "",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "gap": 16,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 56,
+        "padding-block-end": 24
       }
     },
     "product_list_new_arrivals": {
@@ -699,7 +696,7 @@
   "order": [
     "hero_jVaWmY",
     "custom_usp_strip",
-    "collection_list_n6KVqY",
+    "collection_grid_breezy",
     "product_list_new_arrivals",
     "custom_pullquote",
     "product_list_bestsellers",

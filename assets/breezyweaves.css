@@ -329,6 +329,13 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
               box-shadow var(--bw-dur-md) var(--bw-ease-lux);
 }
 
+/* Full-card link sits under `.collection-card__inner` in DOM; BW title uses z-index: 3 — raise
+   the link so clicks hit `collection.url` instead of the inert title / image layer. */
+.collection-card > .collection-card__link {
+  z-index: 5;
+  cursor: pointer;
+}
+
 .collection-card img,
 .resource-list__item .card-collection img {
   transition: transform 1100ms var(--bw-ease-lux),

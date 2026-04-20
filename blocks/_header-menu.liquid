@@ -28,8 +28,14 @@
 
   {% when 'navigation_bar' %}
     {% if block_settings.navigation_bar == true %}
+      {% liquid
+        assign nav_bar_color_scheme = block_settings.color_scheme_navigation_bar
+        if nav_bar_color_scheme == blank
+          assign nav_bar_color_scheme = 'scheme-1'
+        endif
+      %}
       <div
-        class="menu-list menu-list--mobile{% if transparent == blank %} color-{{ block_settings.color_scheme_navigation_bar }}{% endif %}"
+        class="menu-list menu-list--mobile color-{{ nav_bar_color_scheme }}"
         style="--menu-horizontal-gap: 15px; --mobile-nav-margin: auto;"
         data-hydration-key="header-menu-mobile-navigation-bar"
       >

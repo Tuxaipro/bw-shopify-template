@@ -587,6 +587,15 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   gap: 5px;
   z-index: 4;
   max-width: calc(100% - 56px);
+  /* Decorative only — let clicks pass through to `.product-card__link` under the card body */
+  pointer-events: none;
+}
+
+/* Full-card link is first in DOM but paints under `.product-card__content`; raise it so gallery/title/price taps go to the product (collection grid + everywhere). */
+.product-card > .product-card__link,
+.card-product > .product-card__link {
+  z-index: 3;
+  cursor: pointer;
 }
 
 .bw-badge {
@@ -1004,6 +1013,32 @@ slideshow-component.resource-list__carousel slideshow-slide {
 main-collection-component,
 .template-collection {
   --bw-filter-w: 260px;
+}
+
+/* Collection template (section): link back to /collections */
+.bw-collection-breadcrumb {
+  margin: 0;
+  font-family: var(--font-body--family);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground-rgb) / 0.65);
+}
+
+.bw-collection-breadcrumb a {
+  color: var(--bw-red-deep);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.bw-collection-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.bw-collection-breadcrumb__sep {
+  margin: 0 0.35em;
+  color: rgb(var(--color-foreground-rgb) / 0.35);
+  font-weight: 400;
 }
 
 /* Breadcrumbs */

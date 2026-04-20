@@ -451,7 +451,8 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
 
 /* 6b ───────────── Collections index (/collections) ─────────────
    Premium editorial directory: cinematic tiles, staggered reveals,
-   eyebrow label, decorative gold divider, and warm hover states.   */
+   eyebrow label, decorative gold divider, and warm hover states.
+   Handles BOTH placement types: "on_image" and "below_image".      */
 .bw-collections-directory {
   --bw-tile-radius: 10px;
 }
@@ -521,17 +522,22 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   }
 }
 
-/* ---- Card overrides inside directory ---- */
+/* ================================================================
+   CARD CONTAINER — shared by both placement types
+   ================================================================ */
 .bw-collections-directory .collection-card {
   --bw-tile-radius: 10px;
   border-radius: var(--bw-tile-radius);
-  box-shadow: var(--bw-shadow-sm);
+  background: var(--bw-ivory, #faf6ec);
+  border: 1px solid var(--bw-border, #e8dec6);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   transition:
     transform var(--bw-dur-md) var(--bw-ease-lux),
-    box-shadow var(--bw-dur-md) var(--bw-ease-lux);
+    box-shadow var(--bw-dur-md) var(--bw-ease-lux),
+    border-color var(--bw-dur-md) var(--bw-ease-lux);
 }
 
-/* Force consistent portrait ratio on directory cards */
+/* Force consistent portrait ratio */
 .bw-collections-directory .collection-card .collection-card__image,
 .bw-collections-directory .collection-card .resource-image {
   aspect-ratio: 3 / 4;
@@ -543,7 +549,112 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   height: 100%;
 }
 
-/* Gradient overlay for on-image cards in directory */
+/* Shared hover: lift + shadow + gold border */
+@media (hover: hover) {
+  .bw-collections-directory .collection-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06);
+    border-color: var(--bw-gold);
+  }
+  .bw-collections-directory .collection-card:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.03);
+  }
+}
+
+/* ================================================================
+   BELOW-IMAGE placement  (title sits under the photo)
+   ================================================================ */
+
+/* Image well: rounded top corners, contained */
+.bw-collections-directory .collection-card:not(.collection-card--image-bg) .collection-card__image,
+.bw-collections-directory .collection-card:not(.collection-card--image-bg) .resource-image {
+  border-radius: var(--bw-tile-radius) var(--bw-tile-radius) 0 0;
+  overflow: hidden;
+}
+
+/* Subtle warm gradient at the bottom of the image for depth */
+.bw-collections-directory .collection-card:not(.collection-card--image-bg) .collection-card__image::after,
+.bw-collections-directory .collection-card:not(.collection-card--image-bg) .resource-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 65%,
+    rgba(26, 10, 10, 0.08) 100%
+  );
+  z-index: 1;
+}
+
+/* Content area below image */
+.bw-collections-directory .collection-card:not(.collection-card--image-bg) .collection-card__content {
+  padding: 16px 18px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  position: relative;
+}
+
+/* Gold accent line above the content area */
+.bw-collections-directory .collection-card:not(.collection-card--image-bg) .collection-card__content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 18px;
+  right: 18px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--bw-gold), transparent 80%);
+  opacity: 0.4;
+}
+
+/* Title styling — below image */
+.bw-collections-directory .collection-card:not(.collection-card--image-bg) [data-testid="collection-title"],
+.bw-collections-directory .collection-card:not(.collection-card--image-bg) [class*="collection-title"] {
+  font-family: var(--font-heading--family) !important;
+  font-size: clamp(1rem, 1.5vw, 1.15rem) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em;
+  color: var(--bw-ink) !important;
+  line-height: 1.3;
+  margin: 0;
+  transition: color var(--bw-dur-sm) var(--bw-ease-lux);
+}
+
+/* Arrow indicator — sits after title text, slides in on hover */
+.bw-collections-directory .collection-card:not(.collection-card--image-bg) [data-testid="collection-title"]::after,
+.bw-collections-directory .collection-card:not(.collection-card--image-bg) [class*="collection-title"]::after {
+  content: "→";
+  display: inline-block;
+  margin-left: 0.5em;
+  color: var(--bw-gold);
+  font-weight: 400;
+  font-size: 1.05em;
+  transform: translateX(-4px);
+  opacity: 0;
+  transition: transform var(--bw-dur-md) var(--bw-ease-lux),
+              opacity var(--bw-dur-md) var(--bw-ease-lux);
+}
+
+@media (hover: hover) {
+  .bw-collections-directory .collection-card:not(.collection-card--image-bg):hover [data-testid="collection-title"],
+  .bw-collections-directory .collection-card:not(.collection-card--image-bg):hover [class*="collection-title"] {
+    color: var(--bw-red-deep) !important;
+  }
+  .bw-collections-directory .collection-card:not(.collection-card--image-bg):hover [data-testid="collection-title"]::after,
+  .bw-collections-directory .collection-card:not(.collection-card--image-bg):hover [class*="collection-title"]::after {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ================================================================
+   ON-IMAGE placement  (title overlays the photo)
+   ================================================================ */
+
+/* Gradient overlay */
 .bw-collections-directory .collection-card.collection-card--image-bg::before {
   background: linear-gradient(
     180deg,
@@ -552,22 +663,14 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   );
 }
 
-/* Gold inset frame */
+/* Gold inset frame — appears on hover */
 .bw-collections-directory .collection-card.collection-card--image-bg::after {
   inset: 8px;
   border: 1px solid rgba(217, 189, 116, 0);
   border-radius: calc(var(--bw-tile-radius) - 3px);
 }
 
-/* Hover: deeper gradient, gold frame reveal, stronger lift */
 @media (hover: hover) {
-  .bw-collections-directory .collection-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--bw-shadow-lg);
-  }
-  .bw-collections-directory .collection-card:hover img {
-    transform: scale(1.06);
-  }
   .bw-collections-directory .collection-card.collection-card--image-bg:hover::before {
     background: linear-gradient(180deg, rgba(139, 30, 14, 0.08) 0%, rgba(26, 10, 10, 0.72) 100%);
   }
@@ -576,7 +679,7 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   }
 }
 
-/* ---- Title treatment on directory cards ---- */
+/* Title — on image */
 .bw-collections-directory .collection-card.collection-card--image-bg [data-testid="collection-title"],
 .bw-collections-directory .collection-card.collection-card--image-bg [class*="collection-title"] {
   font-family: var(--font-heading--family);
@@ -587,7 +690,7 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
 }
 
-/* Arrow after title */
+/* Arrow after title — on image */
 .bw-collections-directory .collection-card.collection-card--image-bg [data-testid="collection-title"]::after,
 .bw-collections-directory .collection-card.collection-card--image-bg [class*="collection-title"]::after {
   content: " →";
@@ -599,14 +702,16 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
               opacity var(--bw-dur-md) var(--bw-ease-lux);
 }
 @media (hover: hover) {
-  .bw-collections-directory .collection-card:hover [data-testid="collection-title"]::after,
-  .bw-collections-directory .collection-card:hover [class*="collection-title"]::after {
+  .bw-collections-directory .collection-card.collection-card--image-bg:hover [data-testid="collection-title"]::after,
+  .bw-collections-directory .collection-card.collection-card--image-bg:hover [class*="collection-title"]::after {
     opacity: 1;
     transform: translateX(0);
   }
 }
 
-/* ---- Staggered entrance for cards ---- */
+/* ================================================================
+   STAGGERED ENTRANCE  (both placements)
+   ================================================================ */
 .bw-collections-directory .resource-list__item {
   opacity: 0;
   transform: translateY(18px);
@@ -642,6 +747,9 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   }
   .bw-collections-directory .collection-card {
     --bw-tile-radius: 8px;
+  }
+  .bw-collections-directory .collection-card:not(.collection-card--image-bg) .collection-card__content {
+    padding: 12px 14px 14px;
   }
 }
 

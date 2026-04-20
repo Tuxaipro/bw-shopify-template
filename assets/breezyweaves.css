@@ -527,11 +527,11 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   }
 }
 
-/* ---- Badges (top-left) ---- */
+/* ---- Badges (top-left) — vertical offset from theme: Breezyweaves store → Product cards: top offset ---- */
 .product-card__badges,
 .bw-badge-row {
   position: absolute;
-  top: 12px;
+  top: var(--bw-card-top-controls-offset, 16px);
   left: 12px;
   display: flex;
   flex-wrap: wrap;
@@ -560,10 +560,10 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
 .bw-badge--sale       { background: #fff;                   color: var(--bw-red-deep);
                         border: 1px solid var(--bw-red-deep); }
 
-/* ---- Wishlist (top-right, always visible, ghosted) ---- */
+/* ---- Wishlist (top-right, always visible, ghosted) — same theme offset as badges ---- */
 .bw-wishlist-btn {
   position: absolute;
-  top: 15px;
+  top: var(--bw-card-top-controls-offset, 16px);
   right: 12px;
   width: 34px;
   height: 34px;

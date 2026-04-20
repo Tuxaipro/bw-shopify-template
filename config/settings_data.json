@@ -16,6 +16,7 @@
     "breezyweaves_whatsapp_url": "",
     "breezyweaves_show_whatsapp_button": true,
     "breezyweaves_wishlist_url": "",
+    "breezyweaves_product_card_top_controls_offset": 16,
     "type_body_font": "inter_n4",
     "type_subheading_font": "inter_n5",
     "type_heading_font": "playfair_display_n4",

@@ -31,6 +31,11 @@
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-schemes' -%}
+    <style id="breezyweaves-card-vars">
+      :root {
+        --bw-card-top-controls-offset: {{ settings.breezyweaves_product_card_top_controls_offset | default: 16 }}px;
+      }
+    </style>
     {{ 'breezyweaves.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'breezyweaves.js' | asset_url }}" defer="defer"></script>
 

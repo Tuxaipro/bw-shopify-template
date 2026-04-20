@@ -80,6 +80,17 @@
         "id": "breezyweaves_wishlist_url",
         "label": "Wishlist page URL",
         "info": "Paste your wishlist app page or collection URL. Leave blank to hide the heart icon in the header."
+      },
+      {
+        "type": "range",
+        "id": "breezyweaves_product_card_top_controls_offset",
+        "min": 6,
+        "max": 36,
+        "step": 1,
+        "unit": "px",
+        "label": "Product cards: top offset for wishlist & badges",
+        "info": "Distance from the top of each product card to the heart and sale badges. Increase if they look clipped; decrease to sit closer to the image.",
+        "default": 16
       }
     ]
   },

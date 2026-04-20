@@ -15,6 +15,7 @@
         "text_YLPk4p": {
           "type": "text",
           "name": "t:names.heading",
+          "disabled": true,
           "settings": {
             "text": "<p>Woven in silk and stillness</p>",
             "width": "100%",
@@ -61,6 +62,7 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
+        "image_1": "shopify://shop_images/hero-001.png",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,

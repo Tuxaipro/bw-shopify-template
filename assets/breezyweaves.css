@@ -700,11 +700,29 @@ slideshow-component.resource-list__carousel slideshow-slide {
 .product-card__content,
 .card-product__content {
   padding-top: 0 !important;
-  /* +4px inset for title, price, fabric chip, rating, and color line; keeps theme --padding-inline-* from spacing-style */
-  padding-inline-start: calc(var(--padding-inline-start, 0px) + 4px) !important;
   gap: 12px !important;
   background: var(--bw-ivory, #faf6ec);
   border-radius: 0 0 10px 10px;
+}
+
+/* +4px left inset for copy blocks only — not `.card-gallery` (product image stays flush with card) */
+.product-card__content .text-block,
+.product-card__content product-price,
+.product-card__content product-swatches,
+.product-card__content .rating-wrapper,
+.product-card__content .product-grid-view-zoom-out--details,
+.product-card__content .bw-card-meta,
+.product-card__content .bw-card-rating,
+.product-card__content .bw-card-colors-row,
+.card-product__content .text-block,
+.card-product__content product-price,
+.card-product__content product-swatches,
+.card-product__content .rating-wrapper,
+.card-product__content .product-grid-view-zoom-out--details,
+.card-product__content .bw-card-meta,
+.card-product__content .bw-card-rating,
+.card-product__content .bw-card-colors-row {
+  padding-inline-start: 4px;
 }
 
 /* Gallery block can carry theme “Top” padding; zero it inside cards so the image meets the card top */

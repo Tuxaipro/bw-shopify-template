@@ -113,33 +113,52 @@
     update();
   };
 
-  /* ───────────── 4. IntersectionObserver reveals ───────────── */
+  /* ───────────── 4. IntersectionObserver reveals ─────────────
+     Safety principle: never hide anything unless we are certain JS can
+     observe it. If IntersectionObserver isn't available, mark everything
+     visible immediately. Also apply a 2s safety timeout that forces
+     reveal on any still-hidden card, so the page never stays blank. */
   const initReveals = () => {
-    // Auto-tag product grids & collection lists
-    document
-      .querySelectorAll(
-        '[data-section-type*="product-list"], ' +
-          '[data-section-type*="collection-list"], ' +
-          '[data-section-type*="featured-product"], ' +
-          '.product-grid, .collection-list, .resource-list'
-      )
-      .forEach((section) => {
-        const items = section.querySelectorAll(
-          '.resource-list__item, .grid__item'
-        );
-        items.forEach((el, i) => {
-          el.style.setProperty('--bw-index', i);
-        });
-        section.dataset.bwReveal = section.dataset.bwReveal || 'grid';
-      });
+    const hasIO = 'IntersectionObserver' in window;
 
-    if (!('IntersectionObserver' in window)) {
-      document
-        .querySelectorAll('[data-bw-reveal]')
-        .forEach((el) => el.setAttribute('data-bw-in', '1'));
-      document
-        .querySelectorAll('[data-bw-reveal="grid"]')
-        .forEach((el) => el.setAttribute('data-bw-revealed', '1'));
+    // Collect product/collection card containers by ANY of the common
+    // markers Shopify themes expose. Cast a wide net.
+    const cardContainers = document.querySelectorAll(
+      '.resource-list, .product-grid, .collection-list, ' +
+        'product-list-component, collection-list-component, ' +
+        '[class*="product-list"] ul, [class*="collection-list"] ul'
+    );
+
+    const observedItems = [];
+
+    cardContainers.forEach((container) => {
+      const items = container.querySelectorAll(
+        '.resource-list__item, .grid__item, li.product-card, li'
+      );
+      items.forEach((el, i) => {
+        // Only tag genuine card-like children (skip headers/buttons/etc.)
+        if (
+          !el.matches(
+            '.resource-list__item, .grid__item, li.product-card, ' +
+              'li:has(product-card), li:has(.product-card), ' +
+              'li:has(.card-product), li:has([class*="collection-card"])'
+          )
+        ) {
+          return;
+        }
+        el.style.setProperty('--bw-index', i % 8); // cap stagger at 8
+        el.setAttribute('data-bw-card-reveal', '');
+        observedItems.push(el);
+      });
+    });
+
+    // Observe utility-level [data-bw-reveal] elements + the card items.
+    const utilityEls = document.querySelectorAll('[data-bw-reveal]');
+
+    // Fallback: no IntersectionObserver → reveal everything now.
+    if (!hasIO) {
+      utilityEls.forEach((el) => el.setAttribute('data-bw-in', '1'));
+      observedItems.forEach((el) => el.setAttribute('data-bw-in', '1'));
       return;
     }
 
@@ -147,30 +166,22 @@
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          const el = entry.target;
-          if (el.dataset.bwReveal === 'grid') {
-            el.setAttribute('data-bw-revealed', '1');
-          } else {
-            el.setAttribute('data-bw-in', '1');
-          }
-          io.unobserve(el);
+          entry.target.setAttribute('data-bw-in', '1');
+          io.unobserve(entry.target);
         });
       },
-      { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
     );
 
-    document
-      .querySelectorAll('[data-bw-reveal]')
-      .forEach((el) => io.observe(el));
+    utilityEls.forEach((el) => io.observe(el));
+    observedItems.forEach((el) => io.observe(el));
 
-    // Auto-tag headings in product-list / collection-list sections
+    // Auto-tag hook headings + custom editorial blocks as reveals too.
     document
       .querySelectorAll(
-        '[data-section-type*="product-list"] h2, ' +
-          '[data-section-type*="product-list"] h3, ' +
-          '[data-section-type*="collection-list"] h2, ' +
-          '.breezy-fabric-story, .breezy-pullquote, .breezy-newsletter, ' +
-          '.breezy-usp-strip, .breezy-insta-grid, .breezy-pdp-trust'
+        '.breezy-fabric-story, .breezy-pullquote, .breezy-newsletter, ' +
+          '.breezy-usp-strip, .breezy-insta-grid, .breezy-pdp-trust, ' +
+          '.product-list h2, .product-list h3, .collection-list h2'
       )
       .forEach((el) => {
         if (!el.hasAttribute('data-bw-reveal')) {
@@ -178,6 +189,30 @@
           io.observe(el);
         }
       });
+
+    // Safety net: after 2 seconds, force-reveal anything still hidden
+    // (e.g. items that were already in-viewport before the observer
+    // attached, or observer edge cases in older browsers).
+    setTimeout(() => {
+      document
+        .querySelectorAll(
+          '[data-bw-reveal]:not([data-bw-in="1"]), ' +
+            '[data-bw-card-reveal]:not([data-bw-in="1"])'
+        )
+        .forEach((el) => el.setAttribute('data-bw-in', '1'));
+    }, 2000);
+
+    // Belt-and-suspenders: immediately reveal any card already in viewport
+    // at init time (covers initial above-the-fold content).
+    requestAnimationFrame(() => {
+      [...utilityEls, ...observedItems].forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          el.setAttribute('data-bw-in', '1');
+          io.unobserve(el);
+        }
+      });
+    });
   };
 
   /* ───────────── 5. Magnetic CTAs ───────────── */

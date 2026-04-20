@@ -591,26 +591,20 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   }
 }
 
-/* 8 ───────────── Product list sections (reveals) ───────────── */
-[data-section-type*="product-list"] .resource-list,
-.product-list__grid,
-.product-grid {
-  --bw-stagger: 80ms;
-}
-
-.resource-list__item,
-.product-grid .grid__item {
+/* 8 ───────────── Product list sections (reveals) ─────────────
+   Opt-in only: items are visible by default. JS adds data-bw-card-reveal
+   to each item on sections the observer tracks, and data-bw-in="1" when
+   the item enters the viewport. If the JS fails to run, cards remain
+   visible — never hidden by default. */
+[data-bw-card-reveal] {
   opacity: 0;
   transform: translateY(22px);
   transition: opacity var(--bw-dur-lg) var(--bw-ease-lux),
               transform var(--bw-dur-lg) var(--bw-ease-lux);
-  transition-delay: calc(var(--bw-index, 0) * var(--bw-stagger));
+  transition-delay: calc(var(--bw-index, 0) * 60ms);
 }
 
-.bw-in-view .resource-list__item,
-.bw-in-view .grid__item,
-[data-bw-revealed="1"] .resource-list__item,
-[data-bw-revealed="1"] .grid__item {
+[data-bw-card-reveal][data-bw-in="1"] {
   opacity: 1;
   transform: translateY(0);
 }

@@ -786,6 +786,7 @@ slideshow-component.resource-list__carousel slideshow-slide {
   gap: 10px;
   margin-top: 8px;
   order: 1001;
+  padding-inline-start: 4px;
   padding-bottom: 12px;
 }
 

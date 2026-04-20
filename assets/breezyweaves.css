@@ -1607,29 +1607,6 @@ footer .utilities a[href*="instagram"]:hover {
 }
 
 /* 14 ───────────── USP strip / testimonial / newsletter ───────────── */
-
-/* Collapse any residual gap between hero and the USP strip.
-   Hero uses scheme-5 (red-deep); if the section wrapper adds bottom
-   padding or a spacer div, the red bleeds through below the image. */
-.shopify-section:has(.hero) {
-  margin-block-end: 0 !important;
-  padding-block-end: 0 !important;
-}
-.shopify-section:has(.hero) + .shopify-section {
-  margin-block-start: 0 !important;
-  padding-block-start: 0 !important;
-}
-.shopify-section:has(.hero) .section {
-  padding-block-end: 0 !important;
-}
-.shopify-section:has(.breezy-usp-strip) {
-  margin-block-start: 0 !important;
-}
-.shopify-section:has(.breezy-usp-strip) .section {
-  padding-block-start: 0 !important;
-  padding-block-end: 0 !important;
-}
-
 .breezy-usp-strip {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

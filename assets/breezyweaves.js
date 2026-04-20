@@ -368,11 +368,11 @@
   };
 
   /* ───────────── Product card DOM relocation ─────────────
-     The product-card snippet injects four helper nodes as direct children
+     The product-card snippet injects helper nodes as direct children
      of <product-card>: .bw-card-overlay, .bw-card-meta, .bw-card-rating,
-     .bw-card-swatches. We relocate them into their correct visual homes:
+     .bw-card-colors-row (wraps label + .bw-card-swatches). We relocate them:
        - .bw-card-overlay  → into the media well (.product-card__media / .card-gallery)
-       - .bw-card-meta, .bw-card-rating, .bw-card-swatches → inside .product-card__content
+       - .bw-card-meta, .bw-card-rating, .bw-card-colors-row → inside .product-card__content
      This is idempotent: we bail if the node is already in the right parent.
   */
   const initProductCards = () => {
@@ -402,7 +402,7 @@
         [
           ':scope > .bw-card-meta',
           ':scope > .bw-card-rating',
-          ':scope > .bw-card-swatches',
+          ':scope > .bw-card-colors-row',
         ].forEach((sel) => {
           const node = card.querySelector(sel);
           if (node && node.parentElement !== content) {

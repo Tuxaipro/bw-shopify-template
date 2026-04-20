@@ -416,6 +416,7 @@ def main() -> None:
             "overlay_color": "#3D151099",
             "horizontal_alignment_flex_direction_column": "center",
             "section_height": "large",
+            "padding-block-end": 0,
         }
     )
 

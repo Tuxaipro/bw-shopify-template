@@ -645,23 +645,59 @@
         "padding-block-end": 48
       }
     },
+    "custom_usp_strip": {
+      "type": "custom-liquid",
+      "name": "Trust / USP strip",
+      "settings": {
+        "custom_liquid": "<div class=\"breezy-usp-strip\" data-bw-reveal=\"fade\" role=\"list\">\n  <div class=\"breezy-usp-strip__item\" role=\"listitem\"><strong>Free US shipping</strong>On every order</div>\n  <div class=\"breezy-usp-strip__item\" role=\"listitem\"><strong>Ships in 48 hours</strong>From Ashburn, VA</div>\n  <div class=\"breezy-usp-strip__item\" role=\"listitem\"><strong>Limited editions</strong>1 SKU per size</div>\n  <div class=\"breezy-usp-strip__item\" role=\"listitem\"><strong>Concierge support</strong>Message on WhatsApp</div>\n</div>",
+        "color_scheme": "scheme-1",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "custom_fabric_story": {
       "type": "custom-liquid",
       "name": "Our fabrics",
       "settings": {
-        "custom_liquid": "<div class=\"breezy-fabric-story\">\n  <h2 class=\"breezy-fabric-story__title\">Our fabrics</h2>\n  <p class=\"breezy-fabric-story__lede\">Breathable materials chosen for drape, comfort, and quiet luxury.</p>\n  <div class=\"breezy-fabric-grid\">\n    <article class=\"breezy-fabric-card\"><h3>Silk</h3><p>Natural sheen and fluid movement for celebrations and evenings out.</p></article>\n    <article class=\"breezy-fabric-card\"><h3>Cotton</h3><p>Soft, airy, and easy—ideal for everyday kurtis and relaxed silhouettes.</p></article>\n    <article class=\"breezy-fabric-card\"><h3>Crepe</h3><p>Lightweight texture that skims the body with a refined matte finish.</p></article>\n    <article class=\"breezy-fabric-card\"><h3>Viscose</h3><p>Fluid drape with a gentle hand—perfect for travel-friendly pieces.</p></article>\n    <article class=\"breezy-fabric-card\"><h3>Georgette</h3><p>Sheer structure with graceful flow for layered and Indo-western looks.</p></article>\n  </div>\n</div>",
+        "custom_liquid": "<div class=\"breezy-fabric-story\" data-bw-reveal>\n  <h2 class=\"breezy-fabric-story__title\">Our fabrics</h2>\n  <p class=\"breezy-fabric-story__lede\">Breathable materials chosen for drape, comfort, and quiet luxury\u2014woven for how life actually moves.</p>\n  <div class=\"breezy-fabric-grid\">\n    <article class=\"breezy-fabric-card\" data-bw-reveal style=\"--bw-reveal-delay:0ms\"><h3>Silk</h3><p>Natural sheen and fluid movement for celebrations and evenings out.</p></article>\n    <article class=\"breezy-fabric-card\" data-bw-reveal style=\"--bw-reveal-delay:80ms\"><h3>Cotton</h3><p>Soft, airy, and easy\u2014ideal for everyday kurtis and relaxed silhouettes.</p></article>\n    <article class=\"breezy-fabric-card\" data-bw-reveal style=\"--bw-reveal-delay:160ms\"><h3>Crepe</h3><p>Lightweight texture that skims the body with a refined matte finish.</p></article>\n    <article class=\"breezy-fabric-card\" data-bw-reveal style=\"--bw-reveal-delay:240ms\"><h3>Viscose</h3><p>Fluid drape with a gentle hand\u2014perfect for travel-friendly pieces.</p></article>\n    <article class=\"breezy-fabric-card\" data-bw-reveal style=\"--bw-reveal-delay:320ms\"><h3>Georgette</h3><p>Sheer structure with graceful flow for layered and Indo-western looks.</p></article>\n  </div>\n</div>",
         "color_scheme": "scheme-1",
         "section_width": "page-width",
-        "padding-block-start": 32,
-        "padding-block-end": 40
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "custom_pullquote": {
+      "type": "custom-liquid",
+      "name": "Editorial pull-quote",
+      "settings": {
+        "custom_liquid": "<figure class=\"breezy-pullquote\" data-bw-reveal>\n  <p>True luxury is not about excess \u2014 it is about how it feels, how it moves, and how naturally it becomes a part of you.</p>\n  <figcaption><cite>\u2014 Breezyweaves</cite></figcaption>\n</figure>",
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "padding-block-start": 24,
+        "padding-block-end": 24
+      }
+    },
+    "custom_newsletter": {
+      "type": "custom-liquid",
+      "name": "Newsletter",
+      "settings": {
+        "custom_liquid": "<section class=\"breezy-newsletter\" data-bw-reveal aria-label=\"Newsletter signup\">\n  <h2>Join the list</h2>\n  <p>Be first to see new arrivals and limited drops. 10% off your first order when you subscribe.</p>\n  {%- form 'customer' -%}\n    <input type=\"hidden\" name=\"contact[tags]\" value=\"newsletter\">\n    <input type=\"email\" name=\"contact[email]\" placeholder=\"your@email.com\" required aria-label=\"Email address\">\n    <button type=\"submit\" data-bw-magnet>Subscribe</button>\n  {%- endform -%}\n  <small>We respect your inbox \u00b7 unsubscribe anytime</small>\n</section>",
+        "color_scheme": "scheme-1",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     }
   },
   "order": [
     "hero_jVaWmY",
+    "custom_usp_strip",
     "collection_grid_breezy",
     "product_list_new_arrivals",
+    "custom_pullquote",
     "product_list_bestsellers",
-    "custom_fabric_story"
+    "custom_fabric_story",
+    "custom_newsletter"
   ]
 }

@@ -90,6 +90,45 @@
       {{ product.title }}
     </span>
   </a>
+
+  {%- comment -%} Breezyweaves: badges + wishlist overlay {%- endcomment -%}
+  {%- unless onboarding -%}
+    {%- assign bw_has_badges = false -%}
+    {%- if product.tags contains 'new' or product.tags contains 'New' -%}{% assign bw_has_badges = true %}{%- endif -%}
+    {%- if product.tags contains 'bestseller' or product.tags contains 'Bestseller' -%}{% assign bw_has_badges = true %}{%- endif -%}
+    {%- if product.tags contains 'limited' or product.tags contains 'Limited' -%}{% assign bw_has_badges = true %}{%- endif -%}
+    {%- if product.compare_at_price > product.price -%}{% assign bw_has_badges = true %}{%- endif -%}
+
+    {%- if bw_has_badges -%}
+      <div class="bw-badge-row" aria-hidden="true">
+        {%- if product.tags contains 'new' or product.tags contains 'New' -%}
+          <span class="bw-badge bw-badge--new">New</span>
+        {%- endif -%}
+        {%- if product.tags contains 'bestseller' or product.tags contains 'Bestseller' -%}
+          <span class="bw-badge bw-badge--bestseller">Bestseller</span>
+        {%- endif -%}
+        {%- if product.tags contains 'limited' or product.tags contains 'Limited' -%}
+          <span class="bw-badge bw-badge--limited">Limited</span>
+        {%- endif -%}
+        {%- if product.compare_at_price > product.price -%}
+          <span class="bw-badge bw-badge--sale">Sale</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <button
+      type="button"
+      class="bw-wishlist-btn"
+      data-product-id="{{ product.id }}"
+      aria-label="Save {{ product.title | escape }} to wishlist"
+      aria-pressed="false"
+    >
+      <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M10 17.25s-6.25-3.75-6.25-8.5a3.5 3.5 0 0 1 6.25-2.2 3.5 3.5 0 0 1 6.25 2.2c0 4.75-6.25 8.5-6.25 8.5z" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  {%- endunless -%}
+
   <div
     class="
       product-card__content

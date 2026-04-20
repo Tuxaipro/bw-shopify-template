@@ -137,7 +137,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h2>Shop by category</h2><p>Sarees, dresses, lehengas, kurtis, and more—assign your collections in the theme editor.</p>",
+                "text": "<h2>Shop by category.</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -172,13 +172,13 @@
             "placement": "on_image",
             "horizontal_alignment": "flex-start",
             "vertical_alignment": "flex-end",
-            "collection_card_gap": 8,
+            "collection_card_gap": 9,
             "inherit_color_scheme": true,
             "color_scheme": "",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
-            "border_radius": 4
+            "border_radius": 31
           },
           "blocks": {
             "collection-title": {

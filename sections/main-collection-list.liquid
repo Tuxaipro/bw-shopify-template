@@ -2,7 +2,16 @@
 
 {% liquid
   assign section_collections = collections
-  assign max_items = 20
+  case section.settings.layout_type
+    when 'editorial'
+      assign max_items = section.settings.max_collections | default: 4
+    when 'bento'
+      assign max_items = 4
+    when 'carousel'
+      assign max_items = section.settings.collections_limit | default: 24
+    else
+      assign max_items = section.settings.collections_limit | default: 24
+  endcase
 %}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
@@ -10,6 +19,7 @@
 <div
   class="
     section
+    bw-collections-directory
     section--{{ section.settings.section_width }}
     color-{{ section.settings.color_scheme }}
     section-resource-list
@@ -194,6 +204,17 @@
       "unit": "px",
       "default": 8,
       "visible_if": "{{ section.settings.layout_type == 'grid'}}"
+    },
+    {
+      "type": "range",
+      "id": "collections_limit",
+      "label": "Collections to show",
+      "info": "Applies to grid and carousel layouts on the collections index page.",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "default": 24,
+      "visible_if": "{{ section.settings.layout_type == 'grid' or section.settings.layout_type == 'carousel' }}"
     },
     {
       "type": "range",

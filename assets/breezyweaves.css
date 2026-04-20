@@ -421,6 +421,47 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   }
 }
 
+/* 6b ───────────── Collections index (/collections) ─────────────
+   main-collection-list: clearer hierarchy, breathing room, slightly rounder tiles */
+.bw-collections-directory {
+  --bw-tile-radius: 10px;
+}
+
+.bw-collections-directory .section-resource-list__content {
+  margin-bottom: clamp(1.1rem, 2.8vw, 2rem);
+}
+
+.bw-collections-directory .section-resource-list__content :is(h1, .h1) {
+  font-family: var(--font-heading--family);
+  font-weight: 500;
+  font-size: clamp(1.85rem, 3.6vw, 2.35rem);
+  letter-spacing: 0.02em;
+  line-height: 1.12;
+  margin: 0 0 0.5rem;
+  color: var(--bw-ink, #1a1a1a);
+}
+
+.bw-collections-directory .bw-collections-lede {
+  margin: 0;
+  max-width: 38rem;
+  font-family: var(--font-body--family);
+  font-size: clamp(0.94rem, 1.25vw, 1.05rem);
+  line-height: 1.65;
+  color: rgb(var(--color-foreground-rgb) / 0.72);
+  font-weight: 400;
+}
+
+.bw-collections-directory [data-testid="collections-list-grid"] {
+  margin-top: 0.15rem;
+}
+
+@media screen and (min-width: 990px) {
+  .bw-collections-directory .resource-list.resource-list--grid {
+    max-width: min(1200px, 100%);
+    margin-inline: auto;
+  }
+}
+
 /* 7 ───────────── Product cards (best-in-class UX) ─────────────
    Editorial, magazine-like card. Clean always-on state with a calm
    hover reveal. Image is the hero; swatches, rating and quick-view

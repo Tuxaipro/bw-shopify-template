@@ -81,11 +81,8 @@
     endif
   endif
 
-  if media_1 == 'image' and media_2 == 'image'
-    assign media_width_desktop = '50vw'
-  else
-    assign media_width_desktop = '100vw'
-  endif
+  # Full viewport width per slide (hero uses a carousel when multiple media are set).
+  assign media_width_desktop = '100vw'
 
   # If custom mobile media is disabled or no mobile media is present, we need to fallback to desktop media.
   if section.settings.custom_mobile_media == false or media_count_mobile == 0 or media_count == 0
@@ -95,7 +92,7 @@
 
   if fallback_to_desktop
     assign media_width_mobile = media_width_desktop
-  elsif section.settings.stack_media_on_mobile or media_1_mobile != 'image' or media_2_mobile != 'image'
+  elsif section.settings.stack_media_on_mobile or media_1_mobile != 'image' or media_2_mobile != 'image' or media_count_mobile > 1
     assign media_width_mobile = '100vw'
   else
     assign media_width_mobile = '50vw'
@@ -322,6 +319,55 @@
   {%- endif -%}
 {% endcapture %}
 
+{% liquid
+  if media_count > 1
+    assign hero_carousel = true
+  else
+    assign hero_carousel = false
+  endif
+%}
+
+{% if hero_carousel %}
+  {% capture hero_slide_inner_1 %}
+    <div class="hero__slide-inner">
+      {{ media_slot_1 }}
+    </div>
+  {% endcapture %}
+  {% capture hero_slide_inner_2 %}
+    <div class="hero__slide-inner">
+      {{ media_slot_2 }}
+    </div>
+  {% endcapture %}
+  {% assign hero_slide_id_0 = 'hero-slide-' | append: section.id | append: '-0' %}
+  {% assign hero_slide_id_1 = 'hero-slide-' | append: section.id | append: '-1' %}
+  {% capture hero_slideshow_slides %}
+    {% render 'slideshow-slide',
+      index: 0,
+      slide_id: hero_slide_id_0,
+      children: hero_slide_inner_1,
+      media_fit: 'cover'
+    %}
+    {% render 'slideshow-slide',
+      index: 1,
+      slide_id: hero_slide_id_1,
+      children: hero_slide_inner_2,
+      media_fit: 'cover'
+    %}
+  {% endcapture %}
+  {% capture hero_slideshow_controls %}
+    {% render 'slideshow-controls',
+      style: 'dots',
+      item_count: media_count,
+      show_arrows: true,
+      arrows_on_media: true,
+      controls_on_media: true,
+      pagination_position: 'center',
+      icon_style: 'chevron',
+      shape: 'none'
+    %}
+  {% endcapture %}
+{% endif %}
+
 {% capture media %}
   {{ media_slot_1 }}
   {{ media_slot_2 }}
@@ -346,17 +392,19 @@
     }}
   {% endif %}
   {% if media_2 == 'image' %}
-    {{
-      section.settings.image_2
-      | image_url: width: 3840
-      | image_tag:
-        width: section.settings.image_2.width,
-        widths: widths,
-        height: section.settings.image_2.height,
-        alt: '',
-        class: 'hero__media',
-        sizes: sizes
-    }}
+    {% if media_count <= 1 or media_1 != 'image' %}
+      {{
+        section.settings.image_2
+        | image_url: width: 3840
+        | image_tag:
+          width: section.settings.image_2.width,
+          widths: widths,
+          height: section.settings.image_2.height,
+          alt: '',
+          class: 'hero__media',
+          sizes: sizes
+      }}
+    {% endif %}
   {% endif %}
   {% if media_count == 0 %}
     {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero__media' }}
@@ -383,15 +431,17 @@
           }}
       {% endif %}
       {% if media_2_mobile == 'image' %}
-        {{ section.settings.image_2_mobile
-          | image_url: width: 1600
-          | image_tag: width: section.settings.image_2_mobile.width,
-            widths: mobile_widths,
-            height: section.settings.image_2_mobile.height,
-            alt: '',
-            class: 'hero__media',
-            sizes: sizes_mobile
-          }}
+        {% if media_count_mobile <= 1 or media_1_mobile != 'image' %}
+          {{ section.settings.image_2_mobile
+            | image_url: width: 1600
+            | image_tag: width: section.settings.image_2_mobile.width,
+              widths: mobile_widths,
+              height: section.settings.image_2_mobile.height,
+              alt: '',
+              class: 'hero__media',
+              sizes: sizes_mobile
+            }}
+        {% endif %}
       {% endif %}
     {% elsif fallback_to_desktop %}
       {{ media_blurred }}
@@ -421,7 +471,29 @@
       {% endif %}
     {% elsif fallback_to_desktop %}
       {% if media_count > 0 %}
-        {% if media_2 == 'image' %}
+        {% if media_count > 1 %}
+          {% if media_1 == 'image' %}
+            {{ section.settings.image_1
+              | image_url: width: 1600
+              | image_tag: width: section.settings.image_1.width,
+                widths: widths,
+                height: section.settings.image_1.height,
+                alt: '',
+                class: 'hero__media',
+                sizes: sizes
+              }}
+          {% elsif media_2 == 'image' %}
+            {{ section.settings.image_2
+              | image_url: width: 1600
+              | image_tag: width: section.settings.image_2.width,
+                widths: widths,
+                height: section.settings.image_2.height,
+                alt: '',
+                class: 'hero__media',
+                sizes: sizes
+              }}
+          {% endif %}
+        {% elsif media_2 == 'image' %}
           {{ section.settings.image_2
             | image_url: width: 1600
             | image_tag: width: section.settings.image_2.width,
@@ -511,8 +583,8 @@
       ></a>
     {%- endif -%}
     <div
-      class="hero__media-grid"
-      style="--hero-media-count: {{ media_count }};--hero-media-count-mobile: {{ media_count_mobile }};{%- if section.settings.image_1 != blank -%} --hero-media-aspect-ratio: {{ section.settings.image_1.aspect_ratio }};{% endif %}"
+      class="hero__media-grid{% if hero_carousel %} hero__media-grid--carousel{% endif %}"
+      style="--hero-media-count: {% if hero_carousel %}1{% else %}{{ media_count }}{% endif %};--hero-media-count-mobile: {% if hero_carousel %}1{% else %}{{ media_count_mobile }}{% endif %};{%- if section.settings.image_1 != blank -%} --hero-media-aspect-ratio: {{ section.settings.image_1.aspect_ratio }};{% endif %}"
       data-testid="hero-media-wrapper"
     >
       {% liquid
@@ -520,7 +592,24 @@
           render 'overlay', settings: section.settings
         endif
       %}
-      {{ media }}
+      {% if hero_carousel %}
+        {% render 'slideshow',
+          class: 'hero__slideshow',
+          style: '--slideshow-gap: 0px;',
+          slides: hero_slideshow_slides,
+          controls: hero_slideshow_controls,
+          slide_count: media_count,
+          show_arrows: true,
+          icon_style: 'chevron',
+          icon_shape: 'none',
+          autoplay: true,
+          autoplay_speed: 5,
+          slide_position: 'stretch',
+          arrows_position: 'center'
+        %}
+      {% else %}
+        {{ media }}
+      {% endif %}
     </div>
     <div
       class="
@@ -594,6 +683,66 @@
     display: grid;
     grid-column: 1 / -1;
     grid-template-columns: repeat(var(--hero-media-count, 1), 1fr);
+  }
+
+  .hero__media-grid--carousel {
+    display: block;
+
+    slideshow-component {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      pointer-events: auto;
+    }
+
+    slideshow-container,
+    slideshow-slides {
+      height: 100%;
+      min-height: 100%;
+    }
+
+    slideshow-slides {
+      align-items: stretch;
+    }
+
+    slideshow-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      min-height: 100%;
+      max-height: none;
+    }
+
+    .hero__slide-inner,
+    .hero__slide-inner > .hero__media-wrapper {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero__slide-inner picture.hero__media {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero__slide-inner picture.hero__media img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .hero__slide-inner video.hero__media {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    slideshow-controls {
+      z-index: var(--layer-raised);
+    }
   }
 
   .hero--auto .hero__media {

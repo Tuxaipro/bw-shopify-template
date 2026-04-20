@@ -85,7 +85,7 @@
         "color_scheme": "scheme-5",
         "toggle_overlay": true,
         "overlay_color": "rgba(0,0,0,0)",
-        "overlay_style": "solid",
+        "overlay_style": "gradient",
         "gradient_direction": "to bottom",
         "blurred_reflection": true,
         "reflection_opacity": 24,

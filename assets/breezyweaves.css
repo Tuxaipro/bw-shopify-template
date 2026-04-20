@@ -1168,6 +1168,62 @@ footer [class*="social"] a {
   opacity: 0.8;
 }
 
+/* ── Merge footer + utilities into one continuous red band ──
+   The Horizon footer-group renders two separate <section> wrappers,
+   each with its own .section-background. The ivory page bg bleeds
+   between them and .section adds vertical padding. Collapse both. */
+footer {
+  background: var(--bw-red-deep);
+  color: var(--bw-gold-light);
+}
+
+footer .shopify-section,
+footer > .shopify-section + .shopify-section {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: var(--bw-red-deep);
+}
+
+/* Paint every footer section the same deep red so the gap disappears */
+footer .section-background,
+footer [class*="section-background"] {
+  background-color: var(--bw-red-deep) !important;
+}
+
+/* Kill the top/bottom padding that the second section adds */
+footer .shopify-section + .shopify-section .section {
+  padding-block-start: 0 !important;
+}
+
+footer .shopify-section:first-of-type .section {
+  padding-block-end: 1.25rem !important;
+}
+
+/* Utilities row: gold hairline + muted gold text on the same red */
+footer .utilities {
+  border-top: 1px solid rgba(241, 234, 156, 0.22) !important;
+  color: rgba(241, 234, 156, 0.78) !important;
+  padding-block: 1rem 2rem !important;
+}
+
+footer .utilities a {
+  color: rgba(241, 234, 156, 0.9) !important;
+}
+
+footer .utilities a:hover {
+  color: var(--bw-gold-light) !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Social icons inside utilities */
+footer .utilities [class*="social"] a,
+footer .utilities a[href*="facebook"],
+footer .utilities a[href*="instagram"] {
+  border-color: rgba(241, 234, 156, 0.35) !important;
+  color: rgba(241, 234, 156, 0.9) !important;
+}
+
 /* 13 ───────────── Fabric story (editorial) ───────────── */
 .breezy-fabric-story {
   position: relative;

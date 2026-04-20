@@ -89,8 +89,8 @@
         "gradient_direction": "to bottom",
         "blurred_reflection": true,
         "reflection_opacity": 24,
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "padding-block-start": 11,
+        "padding-block-end": 17
       }
     },
     "custom_usp_strip": {

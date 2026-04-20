@@ -11,7 +11,8 @@
  *   7. Free-shipping progress bar                  → [data-bw-free-ship-target]
  *   8. Sticky mobile ATC visibility                → body[data-bw-atc-visible]
  *   9. Announcement-bar marquee pause on hover
- *  10. Respect prefers-reduced-motion + pointer:coarse
+ *  10. Collection card click → navigate to collection
+ *  11. Respect prefers-reduced-motion + pointer:coarse
  *
  * No external libraries. Loaded as a module via theme.liquid.
  */
@@ -367,6 +368,27 @@
     });
   };
 
+  /* ───────────── 10. Collection card click → collection page ─────────────
+     Fail-safe: if the CSS stretched-link can't receive clicks for any reason,
+     this delegated handler catches taps on the card and follows the link.
+     Skips if the user clicked an interactive element inside the card (a, button). */
+  const initCollectionCards = () => {
+    document.addEventListener('click', (e) => {
+      // Don't interfere if the user tapped an actual anchor/button inside the card
+      const interactive = e.target.closest('a[href], button');
+      if (interactive && interactive.href) return; // let the link navigate naturally
+
+      const card = e.target.closest('.collection-card');
+      if (!card) return;
+
+      const link = card.querySelector('.collection-card__link');
+      if (!link || !link.href) return;
+
+      // Navigate to collection
+      window.location.href = link.href;
+    });
+  };
+
   /* ───────────── Product card DOM relocation ─────────────
      Meta / rating / colors row are rendered inside `.product-card__content` in Liquid
      so they share horizontal padding with title + price. Only the overlay is moved:
@@ -406,6 +428,7 @@
     try { initStickyATC(); } catch (e) { console.warn('[bw] sticky atc', e); }
     try { initAnnouncementHover(); } catch (e) { console.warn('[bw] announcement', e); }
     try { initProductCards(); } catch (e) { console.warn('[bw] product cards', e); }
+    try { initCollectionCards(); } catch (e) { console.warn('[bw] collection cards', e); }
   };
 
   if (document.readyState === 'loading') {

@@ -329,12 +329,25 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
               box-shadow var(--bw-dur-md) var(--bw-ease-lux);
 }
 
-/* Full-card link: raise above inner content so taps reach `collection.url` (both placements). */
+/* Full-card link: raise above inner content so taps reach `collection.url` (both placements).
+   Must sit above ::before (z-1), ::after (z-2), title (z-3), and inner (z-1).           */
 .collection-card > .collection-card__link {
-  z-index: 5;
+  display: block;
+  z-index: 10;                    /* well above every child layer */
   cursor: pointer;
-  pointer-events: auto;          /* override any inherited none */
+  pointer-events: auto !important; /* override any inherited none */
   -webkit-tap-highlight-color: transparent;
+}
+
+/* Belt-and-braces: the entire inner wrapper must let clicks pass through to the link. */
+.collection-card .collection-card__inner {
+  pointer-events: none;
+}
+.collection-card .collection-card__inner a,
+.collection-card .collection-card__inner button {
+  pointer-events: auto;
+  position: relative;
+  z-index: 11;                    /* interactive children stay above the card link */
 }
 
 .collection-card img,

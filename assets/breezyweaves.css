@@ -450,43 +450,198 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
 }
 
 /* 6b ───────────── Collections index (/collections) ─────────────
-   main-collection-list: clearer hierarchy, breathing room, slightly rounder tiles */
+   Premium editorial directory: cinematic tiles, staggered reveals,
+   eyebrow label, decorative gold divider, and warm hover states.   */
 .bw-collections-directory {
   --bw-tile-radius: 10px;
 }
 
+/* ---- Header block ---- */
 .bw-collections-directory .section-resource-list__content {
-  margin-bottom: clamp(1.1rem, 2.8vw, 2rem);
+  margin-bottom: clamp(1.5rem, 3.5vw, 2.5rem);
+  position: relative;
+  padding-bottom: clamp(1.5rem, 3vw, 2.2rem);
 }
 
+/* Gold hairline divider after header */
+.bw-collections-directory .section-resource-list__content::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 64px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--bw-gold), var(--bw-gold-light));
+  border-radius: 1px;
+}
+
+/* Eyebrow label */
+.bw-collections-eyebrow {
+  display: block;
+  font-family: var(--font-body--family);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bw-red-deep);
+  margin: 0 0 0.65rem;
+}
+
+/* Page title */
 .bw-collections-directory .section-resource-list__content :is(h1, .h1) {
   font-family: var(--font-heading--family);
   font-weight: 500;
-  font-size: clamp(1.85rem, 3.6vw, 2.35rem);
-  letter-spacing: 0.02em;
-  line-height: 1.12;
-  margin: 0 0 0.5rem;
-  color: var(--bw-ink, #1a1a1a);
+  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+  margin: 0 0 0.75rem;
+  color: var(--bw-ink);
 }
 
+/* Lede paragraph */
 .bw-collections-directory .bw-collections-lede {
   margin: 0;
-  max-width: 38rem;
+  max-width: 42rem;
   font-family: var(--font-body--family);
-  font-size: clamp(0.94rem, 1.25vw, 1.05rem);
-  line-height: 1.65;
-  color: rgb(var(--color-foreground-rgb) / 0.72);
+  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+  line-height: 1.7;
+  color: var(--bw-muted);
   font-weight: 400;
 }
 
+/* ---- Grid tuning ---- */
 .bw-collections-directory [data-testid="collections-list-grid"] {
-  margin-top: 0.15rem;
+  margin-top: 0;
 }
 
 @media screen and (min-width: 990px) {
   .bw-collections-directory .resource-list.resource-list--grid {
     max-width: min(1200px, 100%);
     margin-inline: auto;
+  }
+}
+
+/* ---- Card overrides inside directory ---- */
+.bw-collections-directory .collection-card {
+  --bw-tile-radius: 10px;
+  border-radius: var(--bw-tile-radius);
+  box-shadow: var(--bw-shadow-sm);
+  transition:
+    transform var(--bw-dur-md) var(--bw-ease-lux),
+    box-shadow var(--bw-dur-md) var(--bw-ease-lux);
+}
+
+/* Force consistent portrait ratio on directory cards */
+.bw-collections-directory .collection-card .collection-card__image,
+.bw-collections-directory .collection-card .resource-image {
+  aspect-ratio: 3 / 4;
+}
+.bw-collections-directory .collection-card .resource-image__image,
+.bw-collections-directory .collection-card .resource-image img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* Gradient overlay for on-image cards in directory */
+.bw-collections-directory .collection-card.collection-card--image-bg::before {
+  background: linear-gradient(
+    180deg,
+    transparent 35%,
+    rgba(26, 10, 10, 0.62) 100%
+  );
+}
+
+/* Gold inset frame */
+.bw-collections-directory .collection-card.collection-card--image-bg::after {
+  inset: 8px;
+  border: 1px solid rgba(217, 189, 116, 0);
+  border-radius: calc(var(--bw-tile-radius) - 3px);
+}
+
+/* Hover: deeper gradient, gold frame reveal, stronger lift */
+@media (hover: hover) {
+  .bw-collections-directory .collection-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--bw-shadow-lg);
+  }
+  .bw-collections-directory .collection-card:hover img {
+    transform: scale(1.06);
+  }
+  .bw-collections-directory .collection-card.collection-card--image-bg:hover::before {
+    background: linear-gradient(180deg, rgba(139, 30, 14, 0.08) 0%, rgba(26, 10, 10, 0.72) 100%);
+  }
+  .bw-collections-directory .collection-card.collection-card--image-bg:hover::after {
+    border-color: rgba(217, 189, 116, 0.65);
+  }
+}
+
+/* ---- Title treatment on directory cards ---- */
+.bw-collections-directory .collection-card.collection-card--image-bg [data-testid="collection-title"],
+.bw-collections-directory .collection-card.collection-card--image-bg [class*="collection-title"] {
+  font-family: var(--font-heading--family);
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem) !important;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: #fff !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Arrow after title */
+.bw-collections-directory .collection-card.collection-card--image-bg [data-testid="collection-title"]::after,
+.bw-collections-directory .collection-card.collection-card--image-bg [class*="collection-title"]::after {
+  content: " →";
+  color: var(--bw-gold-light);
+  opacity: 0;
+  transform: translateX(-6px);
+  display: inline-block;
+  transition: transform var(--bw-dur-md) var(--bw-ease-lux),
+              opacity var(--bw-dur-md) var(--bw-ease-lux);
+}
+@media (hover: hover) {
+  .bw-collections-directory .collection-card:hover [data-testid="collection-title"]::after,
+  .bw-collections-directory .collection-card:hover [class*="collection-title"]::after {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ---- Staggered entrance for cards ---- */
+.bw-collections-directory .resource-list__item {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: bw-dir-card-in 550ms var(--bw-ease-lux) forwards;
+}
+.bw-collections-directory .resource-list__item:nth-child(1)  { animation-delay:  60ms; }
+.bw-collections-directory .resource-list__item:nth-child(2)  { animation-delay: 140ms; }
+.bw-collections-directory .resource-list__item:nth-child(3)  { animation-delay: 220ms; }
+.bw-collections-directory .resource-list__item:nth-child(4)  { animation-delay: 300ms; }
+.bw-collections-directory .resource-list__item:nth-child(5)  { animation-delay: 380ms; }
+.bw-collections-directory .resource-list__item:nth-child(6)  { animation-delay: 460ms; }
+.bw-collections-directory .resource-list__item:nth-child(7)  { animation-delay: 540ms; }
+.bw-collections-directory .resource-list__item:nth-child(8)  { animation-delay: 620ms; }
+.bw-collections-directory .resource-list__item:nth-child(9)  { animation-delay: 700ms; }
+.bw-collections-directory .resource-list__item:nth-child(n+10){ animation-delay: 750ms; }
+
+@keyframes bw-dir-card-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bw-collections-directory .resource-list__item {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* ---- Mobile polish ---- */
+@media screen and (max-width: 749px) {
+  .bw-collections-directory .section-resource-list__content :is(h1, .h1) {
+    font-size: 1.85rem;
+  }
+  .bw-collections-directory .collection-card {
+    --bw-tile-radius: 8px;
   }
 }
 

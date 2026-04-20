@@ -1142,7 +1142,8 @@ footer [class*="social"] a {
   width: 36px;
   height: 36px;
   border-radius: 999px;
-  border: 1px solid rgba(241, 234, 156, 0.35);
+  border: none;
+  background: transparent;
   display: grid;
   place-items: center;
   transition: all var(--bw-dur-sm) var(--bw-ease-spring);
@@ -1151,8 +1152,7 @@ footer [class*="social"] a {
 @media (hover: hover) {
   .footer [class*="social"] a:hover,
   footer [class*="social"] a:hover {
-    background: var(--bw-gold-light);
-    color: var(--bw-red-deep);
+    color: var(--bw-gold-light);
     transform: translateY(-2px);
   }
 }
@@ -1216,12 +1216,21 @@ footer .utilities a:hover {
   text-underline-offset: 3px;
 }
 
-/* Social icons inside utilities */
+/* Social icons inside utilities: no border/ring */
 footer .utilities [class*="social"] a,
 footer .utilities a[href*="facebook"],
 footer .utilities a[href*="instagram"] {
-  border-color: rgba(241, 234, 156, 0.35) !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
   color: rgba(241, 234, 156, 0.9) !important;
+}
+
+footer .utilities [class*="social"] a:hover,
+footer .utilities a[href*="facebook"]:hover,
+footer .utilities a[href*="instagram"]:hover {
+  background: transparent !important;
+  color: var(--bw-gold-light) !important;
 }
 
 /* 13 ───────────── Fabric story (editorial) ───────────── */

@@ -223,7 +223,7 @@
             <span
               class="bw-card-swatch"
               title="{{ value | escape }}"
-              style="background: {{ swatch_bg | replace: ' ', '' }}; --bw-swatch-name: '{{ value | escape }}';"
+              style="background-color: {{ swatch_bg | replace: ' ', '' }}; --bw-swatch-name: '{{ value | escape }}';"
               data-swatch-value="{{ value_handle }}"
             ></span>
             {%- assign bw_swatch_index = bw_swatch_index | plus: 1 -%}

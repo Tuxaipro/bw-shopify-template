@@ -805,6 +805,9 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   border: 1px solid rgba(26, 26, 26, 0.12);
   box-shadow: inset 0 0 0 2px #fff;
   background-clip: padding-box;
+  /* Neutral fallback so unknown color names still render as visible chips.
+     Inline style overrides this with the actual color when the browser can parse it. */
+  background-image: linear-gradient(135deg, #f1eac9 0%, #d9bd74 100%);
   position: relative;
   cursor: default;
   transition: transform var(--bw-dur-sm) var(--bw-ease-spring),

@@ -607,49 +607,27 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   100% { transform: scale(1); }
 }
 
-/* ---- Hover quick-view overlay (slides up from bottom of image) ---- */
+/* ---- Hover quick-view overlay (slides up from bottom of image) ----
+   JS (initProductCards in breezyweaves.js) relocates this node inside
+   the media well (.product-card__media / .card-gallery) so it aligns
+   to the bottom of the IMAGE, not the whole card. Before JS runs the
+   overlay sits at the bottom of the card but is invisible (opacity 0).
+*/
 .bw-card-overlay {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 10px;
+  padding: 10px 12px 14px;
   display: flex;
   justify-content: center;
   pointer-events: none;
   z-index: 4;
-  transform: translateY(6px);
+  transform: translateY(8px);
   opacity: 0;
   transition: opacity var(--bw-dur-md) var(--bw-ease-lux),
               transform var(--bw-dur-md) var(--bw-ease-lux);
-}
-
-.product-card .product-card__media,
-.product-card .card-gallery {
-  /* overlay should clip inside the media well */
-  /* (already has overflow hidden; overlay is child of product-card, */
-  /*  so we move it visually to align with the media well via bottom placement) */
-}
-
-/* Position overlay against the media well — use a wrapper-aware selector: */
-.product-card .bw-card-overlay,
-.card-product .bw-card-overlay {
-  /* The card content lives below the media well; we want the overlay to sit
-     at the bottom of the IMAGE, not the whole card. Since the image has
-     aspect-ratio 4/5, we align from the top of the card using a calc fallback
-     by tying to the media well via an absolute stripe just above content. */
-  top: auto;
-  bottom: auto;
-  /* Use container queries where supported; fallback: position from bottom of
-     image using a percentage approximation of the 4:5 ratio isn't reliable,
-     so we instead reposition inside a container — see `.product-card__media`
-     scoped overlay below, which takes precedence. */
-}
-
-/* Preferred: overlay inside the media well when available */
-.product-card__media .bw-card-overlay,
-.card-gallery .bw-card-overlay {
-  top: auto;
+  background: linear-gradient(to top, rgba(26, 26, 26, 0.22), transparent 70%);
 }
 
 .bw-card-overlay__cta {

@@ -1763,8 +1763,8 @@ button.breezy-size-chart-open {
 
 /* ---- Overall product box: two-column layout ---- */
 [data-pf-type="ProductBox"] > .pf-product-form {
-  display: flex;
-  flex-wrap: wrap;
+  display: flex !important;
+  flex-wrap: wrap !important;
   gap: clamp(2rem, 4vw, 3.5rem);
   align-items: flex-start;
   max-width: 1280px;
@@ -1780,13 +1780,24 @@ button.breezy-size-chart-open {
   overflow: hidden;
 }
 
-/* Details column */
+/* ================================================================
+   DETAILS COLUMN — switched to row+wrap so the two CTA buttons
+   can share a single line while everything else stays full-width.
+   ================================================================ */
 [data-pf-type="ProductBox"] > .pf-product-form > [data-pf-type="FlexBlock"] {
   flex: 1 1 44%;
   min-width: 320px;
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
   gap: 0;
+}
+
+/* Every child defaults to full width (behaves like column) */
+[data-pf-type="ProductBox"] > .pf-product-form > [data-pf-type="FlexBlock"] > * {
+  flex: 0 0 100% !important;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* ---- Title ---- */
@@ -1800,7 +1811,7 @@ button.breezy-size-chart-open {
   margin: 0 0 0.6rem !important;
 }
 
-/* ---- Price row ---- */
+/* ---- Price + reviews row ---- */
 [data-pf-type="ProductPrice2"] {
   display: flex;
   align-items: baseline;
@@ -1822,18 +1833,31 @@ button.breezy-size-chart-open {
   text-decoration: line-through;
 }
 
-/* ---- Stars row ---- */
+/* Stars */
 .pf-icon-1.pfa-star {
   color: var(--bw-gold) !important;
   font-size: 0.9rem;
 }
 
-/* ---- Dividers ---- */
+/* ---- Dividers — thin gold-tinted hairlines ---- */
+[data-pf-type="ProductBox"] [data-pf-type="Divider2"],
 [data-pf-type="ProductBox"] .pf-divider-1 {
   border: none !important;
   height: 1px !important;
-  background: linear-gradient(90deg, var(--bw-border), transparent 85%) !important;
-  margin: 1rem 0 !important;
+  min-height: 0 !important;
+  max-height: 1px !important;
+  padding: 0 !important;
+  background: linear-gradient(90deg, var(--bw-gold, #d9bd74) 0%, var(--bw-border, #e8dec6) 40%, transparent 90%) !important;
+  opacity: 0.45;
+  margin: 1.1rem 0 !important;
+  overflow: hidden;
+}
+/* Kill any pseudo-elements PageFly styled-components might inject */
+[data-pf-type="ProductBox"] [data-pf-type="Divider2"]::before,
+[data-pf-type="ProductBox"] [data-pf-type="Divider2"]::after,
+[data-pf-type="ProductBox"] .pf-divider-1::before,
+[data-pf-type="ProductBox"] .pf-divider-1::after {
+  display: none !important;
 }
 
 /* ---- Description ---- */
@@ -1852,7 +1876,7 @@ button.breezy-size-chart-open {
   font-weight: 500 !important;
   color: var(--bw-ink) !important;
   cursor: pointer;
-  display: inline-flex;
+  display: inline-flex !important;
   align-items: center;
   gap: 0.4em;
   margin: 0.5rem 0;
@@ -1864,13 +1888,15 @@ button.breezy-size-chart-open {
 
 /* ---- Quantity selector ---- */
 [data-pf-type="ProductQuantity"] {
-  display: inline-flex;
+  display: inline-flex !important;
   align-items: center;
   border: 1px solid var(--bw-border);
   border-radius: 40px;
   overflow: hidden;
   margin: 0.75rem 0 1.25rem;
   height: 48px;
+  width: auto !important;
+  max-width: fit-content;
 }
 
 [data-pf-type="ProductQuantity"] button {
@@ -1914,53 +1940,57 @@ button.breezy-size-chart-open {
 }
 
 /* ================================================================
-   BUTTONS — "Buy with Shop" + "Add to Cart" on the SAME LINE
+   CTA BUTTONS — "Buy with Shop" + "Add to Cart" on the SAME LINE
+   The parent is now flex-direction:row + flex-wrap:wrap.
+   All siblings are flex:0 0 100%. These two break out to ~50% each.
    ================================================================ */
-/* Wrapper for both buttons: force a flex row */
-[data-pf-type="ProductDynamicCheckout"],
-[data-pf-type="ProductATC2"] {
-  flex: 1 1 0;
-  min-width: 0;
+[data-pf-type="ProductBox"] > .pf-product-form > [data-pf-type="FlexBlock"] > [data-pf-type="ProductDynamicCheckout"] {
+  flex: 1 1 calc(50% - 6px) !important;
+  max-width: calc(50% - 6px) !important;
+  order: 90;
 }
 
-/* Make the parent flex-block render these two as a row.
-   The parent is a PageFly FlexBlock — by default it's column.
-   We override just the last portion (buttons) via CSS grid on a wrapper,
-   but since we can't add a wrapper, we use the parent's flex-wrap. */
-
-/* Target: the details column that holds both buttons as direct children */
-[data-pf-type="ProductBox"] > .pf-product-form > [data-pf-type="FlexBlock"] {
-  flex-wrap: wrap;
+[data-pf-type="ProductBox"] > .pf-product-form > [data-pf-type="FlexBlock"] > [data-pf-type="ProductATC2"] {
+  flex: 1 1 calc(50% - 6px) !important;
+  max-width: calc(50% - 6px) !important;
+  order: 91;
 }
 
-/* The dynamic checkout and ATC button should share a row */
-[data-pf-type="ProductDynamicCheckout"] {
-  flex: 1 1 45%;
-  min-width: 180px;
-  order: 1;
+/* 12px gap between the two buttons (6px margin each side) */
+[data-pf-type="ProductBox"] > .pf-product-form > [data-pf-type="FlexBlock"] > [data-pf-type="ProductDynamicCheckout"] {
+  margin-right: 6px;
+}
+[data-pf-type="ProductBox"] > .pf-product-form > [data-pf-type="FlexBlock"] > [data-pf-type="ProductATC2"] {
+  margin-left: 6px;
 }
 
-[data-pf-type="ProductATC2"] {
-  flex: 1 1 45%;
-  min-width: 180px;
-  order: 2;
-}
-
-/* Shopify dynamic checkout button styling */
+/* Shopify dynamic checkout button — match ATC height */
 [data-pf-type="ProductDynamicCheckout"] .shopify-payment-button {
   width: 100%;
 }
-
 [data-pf-type="ProductDynamicCheckout"] .shopify-payment-button__button {
   border-radius: 8px !important;
   height: 54px !important;
   font-size: 1rem !important;
+  min-height: 54px !important;
 }
 
-/* Add to Cart button — premium BreezyWeaves style */
+/* "More payment options" link — full row below both buttons */
+[data-pf-type="ProductDynamicCheckout"] .shopify-payment-button__more-options {
+  position: relative;
+  display: block;
+  width: 200%;
+  text-align: center;
+  margin-top: 0.6rem;
+  font-size: 0.82rem !important;
+  color: var(--bw-muted);
+}
+
+/* Add to Cart button — premium BreezyWeaves */
 [data-pf-type="ProductATC2"] {
-  height: 54px;
-  border-radius: 8px;
+  height: 54px !important;
+  min-height: 54px !important;
+  border-radius: 8px !important;
   font-family: var(--font-heading--family) !important;
   font-size: 1rem !important;
   font-weight: 600 !important;
@@ -1970,6 +2000,9 @@ button.breezy-size-chart-open {
   color: #fff !important;
   border: none !important;
   cursor: pointer;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
   transition:
     background var(--bw-dur-md) var(--bw-ease-lux),
     transform var(--bw-dur-sm) var(--bw-ease-lux),
@@ -1984,18 +2017,7 @@ button.breezy-size-chart-open {
   transform: translateY(0);
 }
 
-/* "More payment options" link below the buttons */
-.shopify-payment-button__more-options,
-more-payment-options-link {
-  order: 3;
-  flex-basis: 100%;
-  text-align: center;
-  margin-top: 0.5rem;
-  font-size: 0.85rem !important;
-  color: var(--bw-muted);
-}
-
-/* ---- Variant swatches premium ---- */
+/* ---- Variant swatches ---- */
 [data-pf-type="ProductVariantSwatches"] .pf-variant-label {
   font-family: var(--font-heading--family) !important;
   font-size: 0.8rem !important;
@@ -2024,7 +2046,7 @@ more-payment-options-link {
   font-weight: 500;
 }
 
-/* ---- Reviews text ---- */
+/* ---- Reviews count text ---- */
 [data-pf-type="ProductBox"] .pf-heading-1-h3:not(:has(.pfa)) {
   font-family: var(--font-body--family) !important;
   font-size: 0.85rem !important;
@@ -2032,7 +2054,7 @@ more-payment-options-link {
   color: var(--bw-muted) !important;
 }
 
-/* ---- Mobile adjustments ---- */
+/* ---- Mobile: stack buttons ---- */
 @media screen and (max-width: 749px) {
   [data-pf-type="ProductBox"] > .pf-product-form {
     flex-direction: column;
@@ -2044,10 +2066,16 @@ more-payment-options-link {
     flex-basis: 100%;
     min-width: 0;
   }
-  [data-pf-type="ProductDynamicCheckout"],
-  [data-pf-type="ProductATC2"] {
-    flex-basis: 100%;
-    min-width: 0;
+  /* Stack buttons on mobile */
+  [data-pf-type="ProductBox"] > .pf-product-form > [data-pf-type="FlexBlock"] > [data-pf-type="ProductDynamicCheckout"],
+  [data-pf-type="ProductBox"] > .pf-product-form > [data-pf-type="FlexBlock"] > [data-pf-type="ProductATC2"] {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  [data-pf-type="ProductDynamicCheckout"] .shopify-payment-button__more-options {
+    width: 100%;
   }
   [data-pf-type="ProductTitle"] {
     font-size: 1.5rem !important;

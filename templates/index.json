@@ -137,7 +137,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h2>Shop by category</h2><p>Sarees, dresses, lehengas, kurtis, and more—assign your collections in the theme editor.</p>",
+                "text": "<h2>Shop by category.</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",

@@ -64,6 +64,7 @@
         "media_type_1": "image",
         "image_1": "shopify://shop_images/hero-001_a2d545b1-b0b6-4065-bfc0-cf884ed051f5.png",
         "media_type_2": "image",
+        "image_2": "shopify://shop_images/hero-002.png",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
         "media_type_1_mobile": "image",

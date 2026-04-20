@@ -368,11 +368,9 @@
   };
 
   /* ───────────── Product card DOM relocation ─────────────
-     The product-card snippet injects helper nodes as direct children
-     of <product-card>: .bw-card-overlay, .bw-card-meta, .bw-card-rating,
-     .bw-card-colors-row (wraps label + .bw-card-swatches). We relocate them:
-       - .bw-card-overlay  → into the media well (.product-card__media / .card-gallery)
-       - .bw-card-meta, .bw-card-rating, .bw-card-colors-row → inside .product-card__content
+     Meta / rating / colors row are rendered inside `.product-card__content` in Liquid
+     so they share horizontal padding with title + price. Only the overlay is moved:
+       - .bw-card-overlay → into the media well (.product-card__media / .card-gallery)
      This is idempotent: we bail if the node is already in the right parent.
   */
   const initProductCards = () => {
@@ -386,29 +384,10 @@
         card.querySelector('[class*="card-gallery"]') ||
         card.querySelector('[class*="product-card__media"]');
 
-      const content =
-        card.querySelector('.product-card__content') ||
-        card.querySelector('.card-product__content') ||
-        card.querySelector('[class*="product-card__content"]');
-
       // Relocate overlay into media well
       const overlay = card.querySelector(':scope > .bw-card-overlay');
       if (overlay && media && overlay.parentElement !== media) {
         media.appendChild(overlay);
-      }
-
-      // Relocate meta / rating / swatches into content area (appended in order)
-      if (content) {
-        [
-          ':scope > .bw-card-meta',
-          ':scope > .bw-card-rating',
-          ':scope > .bw-card-colors-row',
-        ].forEach((sel) => {
-          const node = card.querySelector(sel);
-          if (node && node.parentElement !== content) {
-            content.appendChild(node);
-          }
-        });
       }
 
       card.dataset.bwEnhanced = '1';

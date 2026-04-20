@@ -700,6 +700,8 @@ slideshow-component.resource-list__carousel slideshow-slide {
 .product-card__content,
 .card-product__content {
   padding-top: 0 !important;
+  /* +4px inset for title, price, fabric chip, rating, and color line; keeps theme --padding-inline-* from spacing-style */
+  padding-inline-start: calc(var(--padding-inline-start, 0px) + 4px) !important;
   gap: 12px !important;
   background: var(--bw-ivory, #faf6ec);
   border-radius: 0 0 10px 10px;
@@ -786,7 +788,6 @@ slideshow-component.resource-list__carousel slideshow-slide {
   gap: 10px;
   margin-top: 8px;
   order: 1001;
-  padding-inline-start: 4px;
   padding-bottom: 12px;
 }
 

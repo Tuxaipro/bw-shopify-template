@@ -189,54 +189,6 @@
       </span>
     </div>
 
-    {%- comment -%} Fabric chip only (color count + swatches live in `.bw-card-colors-row`) {%- endcomment -%}
-    {%- if bw_fabric != '' -%}
-      <div class="bw-card-meta" data-bw-card-meta>
-        <span class="bw-card-meta__chip">{{ bw_fabric | capitalize }}</span>
-      </div>
-    {%- endif -%}
-
-    {%- if bw_rating_value > 0 -%}
-      <div class="bw-card-rating" data-bw-card-rating aria-label="Rated {{ bw_rating_value }} out of 5">
-        <span class="bw-card-rating__stars" style="--bw-star-fill: {{ bw_rating_value | divided_by: 5.0 | times: 100 }}%;" aria-hidden="true">
-          <span class="bw-card-rating__stars-bg">★★★★★</span>
-          <span class="bw-card-rating__stars-fg">★★★★★</span>
-        </span>
-        {%- if bw_rating_count > 0 -%}
-          <span class="bw-card-rating__count">({{ bw_rating_count }})</span>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
-
-    {%- if bw_color_option and bw_color_option.values.size > 1 -%}
-      <div class="bw-card-colors-row" data-bw-card-colors-row>
-        <span class="bw-card-colors-row__label">{{ bw_color_option.values.size }} colors</span>
-        <div class="bw-card-swatches" data-bw-card-swatches aria-hidden="true">
-          {%- assign bw_swatch_limit = 5 -%}
-          {%- assign bw_swatch_index = 0 -%}
-          {%- for product_option_value in bw_color_option.values -%}
-            {%- if bw_swatch_index < bw_swatch_limit -%}
-              <span
-                class="bw-card-swatch-item"
-                data-swatch-value="{{ product_option_value.name | handleize }}"
-                title="{{ product_option_value.name | escape }}"
-              >
-                {% render 'swatch',
-                  swatch: product_option_value.swatch,
-                  mode: 'pill',
-                  label: product_option_value.name
-                %}
-              </span>
-              {%- assign bw_swatch_index = bw_swatch_index | plus: 1 -%}
-            {%- endif -%}
-          {%- endfor -%}
-          {%- if bw_color_option.values.size > bw_swatch_limit -%}
-            {%- assign bw_swatch_more = bw_color_option.values.size | minus: bw_swatch_limit -%}
-            <span class="bw-card-swatch-more" aria-hidden="true">+{{ bw_swatch_more }}</span>
-          {%- endif -%}
-        </div>
-      </div>
-    {%- endif -%}
   {%- endunless -%}
 
   <div
@@ -265,6 +217,57 @@
     "
   >
     {{ children }}
+
+    {%- comment -%} Inside content so title/price/colors share the same horizontal padding (no JS move). {%- endcomment -%}
+    {%- unless onboarding -%}
+      {%- if bw_fabric != '' -%}
+        <div class="bw-card-meta" data-bw-card-meta>
+          <span class="bw-card-meta__chip">{{ bw_fabric | capitalize }}</span>
+        </div>
+      {%- endif -%}
+
+      {%- if bw_rating_value > 0 -%}
+        <div class="bw-card-rating" data-bw-card-rating aria-label="Rated {{ bw_rating_value }} out of 5">
+          <span class="bw-card-rating__stars" style="--bw-star-fill: {{ bw_rating_value | divided_by: 5.0 | times: 100 }}%;" aria-hidden="true">
+            <span class="bw-card-rating__stars-bg">★★★★★</span>
+            <span class="bw-card-rating__stars-fg">★★★★★</span>
+          </span>
+          {%- if bw_rating_count > 0 -%}
+            <span class="bw-card-rating__count">({{ bw_rating_count }})</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if bw_color_option and bw_color_option.values.size > 1 -%}
+        <div class="bw-card-colors-row" data-bw-card-colors-row>
+          <span class="bw-card-colors-row__label">{{ bw_color_option.values.size }} colors</span>
+          <div class="bw-card-swatches" data-bw-card-swatches aria-hidden="true">
+            {%- assign bw_swatch_limit = 5 -%}
+            {%- assign bw_swatch_index = 0 -%}
+            {%- for product_option_value in bw_color_option.values -%}
+              {%- if bw_swatch_index < bw_swatch_limit -%}
+                <span
+                  class="bw-card-swatch-item"
+                  data-swatch-value="{{ product_option_value.name | handleize }}"
+                  title="{{ product_option_value.name | escape }}"
+                >
+                  {% render 'swatch',
+                    swatch: product_option_value.swatch,
+                    mode: 'pill',
+                    label: product_option_value.name
+                  %}
+                </span>
+                {%- assign bw_swatch_index = bw_swatch_index | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if bw_color_option.values.size > bw_swatch_limit -%}
+              {%- assign bw_swatch_more = bw_color_option.values.size | minus: bw_swatch_limit -%}
+              <span class="bw-card-swatch-more" aria-hidden="true">+{{ bw_swatch_more }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endunless -%}
   </div>
 </product-card>
 

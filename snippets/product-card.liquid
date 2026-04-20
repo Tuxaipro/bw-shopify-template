@@ -216,22 +216,25 @@
       <div class="bw-card-swatches" data-bw-card-swatches aria-hidden="true">
         {%- assign bw_swatch_limit = 5 -%}
         {%- assign bw_swatch_index = 0 -%}
-        {%- for value in bw_color_option.values -%}
+        {%- for product_option_value in bw_color_option.values -%}
           {%- if bw_swatch_index < bw_swatch_limit -%}
-            {%- assign value_handle = value | handleize -%}
-            {%- assign swatch_bg = value | downcase -%}
             <span
-              class="bw-card-swatch"
-              title="{{ value | escape }}"
-              style="background-color: {{ swatch_bg | replace: ' ', '' }}; --bw-swatch-name: '{{ value | escape }}';"
-              data-swatch-value="{{ value_handle }}"
-            ></span>
+              class="bw-card-swatch-item"
+              data-swatch-value="{{ product_option_value.name | handleize }}"
+              title="{{ product_option_value.name | escape }}"
+            >
+              {% render 'swatch',
+                swatch: product_option_value.swatch,
+                mode: 'pill',
+                label: product_option_value.name
+              %}
+            </span>
             {%- assign bw_swatch_index = bw_swatch_index | plus: 1 -%}
           {%- endif -%}
         {%- endfor -%}
         {%- if bw_color_option.values.size > bw_swatch_limit -%}
           {%- assign bw_swatch_more = bw_color_option.values.size | minus: bw_swatch_limit -%}
-          <span class="bw-card-swatch bw-card-swatch--more" aria-hidden="true">+{{ bw_swatch_more }}</span>
+          <span class="bw-card-swatch-more" aria-hidden="true">+{{ bw_swatch_more }}</span>
         {%- endif -%}
       </div>
     {%- endif -%}

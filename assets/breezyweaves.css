@@ -821,7 +821,7 @@ slideshow-component.resource-list__carousel slideshow-slide {
   white-space: nowrap;
 }
 
-/* ---- Color swatches row ---- */
+/* ---- Color swatches row (uses theme `swatch` snippet + Shopify option swatches) ---- */
 .bw-card-swatches {
   display: flex;
   align-items: center;
@@ -829,30 +829,32 @@ slideshow-component.resource-list__carousel slideshow-slide {
   margin-top: 8px;
   order: 1001;
   flex-wrap: wrap;
+  padding-top: 2px;
+  padding-bottom: 12px;
 }
 
-.bw-card-swatch {
+.bw-card-swatches .bw-card-swatch-item {
+  display: inline-flex;
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+/* Compact pill swatches on cards (theme pill defaults are larger) */
+.bw-card-swatches .swatch.swatch--pill {
+  --swatch-width: 14px;
+  --swatch-height: 14px;
   width: 14px;
   height: 14px;
-  border-radius: 50%;
-  display: inline-block;
-  border: 1px solid rgba(26, 26, 26, 0.12);
-  box-shadow: inset 0 0 0 2px #fff;
-  background-clip: padding-box;
-  /* Neutral fallback so unknown color names still render as visible chips.
-     Inline style overrides this with the actual color when the browser can parse it. */
-  background-image: linear-gradient(135deg, #f1eac9 0%, #d9bd74 100%);
-  position: relative;
-  cursor: default;
-  transition: transform var(--bw-dur-sm) var(--bw-ease-spring),
-              border-color var(--bw-dur-sm) var(--bw-ease-lux);
-}
-.bw-card-swatch:hover {
-  transform: scale(1.15);
-  border-color: var(--bw-gold);
+  min-width: 14px;
+  min-height: 14px;
 }
 
-.bw-card-swatch--more {
+.bw-card-swatches .bw-card-swatch-item:hover .swatch.swatch--pill {
+  transform: scale(1.12);
+  transition: transform var(--bw-dur-sm) var(--bw-ease-spring);
+}
+
+.bw-card-swatch-more {
   width: auto;
   height: auto;
   border: 0;
@@ -863,6 +865,7 @@ slideshow-component.resource-list__carousel slideshow-slide {
   font-size: 0.7rem;
   font-weight: 500;
   padding-left: 2px;
+  align-self: center;
 }
 
 /* ---- Quick-add submit (fallback native Shopify button) ---- */
@@ -1129,6 +1132,30 @@ main-product-component,
   opacity: 0.45;
   text-decoration: line-through;
   cursor: not-allowed;
+}
+
+/* PDP color swatches: selected option used thick outline + pseudo ring — normalize to a single ring */
+.variant-picker .variant-option--swatches .variant-option__button-label--has-swatch:has(:checked),
+.variant-picker .variant-option--swatches .variant-option__button-label--has-swatch:has(:focus-visible) {
+  outline: none !important;
+}
+
+.variant-picker .variant-option--swatches .variant-option__button-label--has-swatch:has(:checked)::after,
+.variant-picker .variant-option--swatches .variant-option__button-label--has-swatch:has(:focus-visible)::after {
+  content: none !important;
+  display: none !important;
+}
+
+.variant-picker .variant-option--swatches .variant-option__button-label--has-swatch:has(:checked) .swatch {
+  box-shadow: 0 0 0 2px var(--bw-red-deep);
+}
+
+.variant-picker .variant-option--swatches .variant-option__button-label--has-swatch:has(:focus-visible):not(:has(:checked)) .swatch {
+  box-shadow: 0 0 0 2px rgb(var(--color-foreground-rgb) / 0.35);
+}
+
+.variant-picker .variant-option--swatches legend {
+  margin-block-end: 0.35rem;
 }
 
 /* Size-chart link */

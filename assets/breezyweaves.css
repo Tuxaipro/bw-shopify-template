@@ -329,8 +329,7 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
               box-shadow var(--bw-dur-md) var(--bw-ease-lux);
 }
 
-/* Full-card link sits under `.collection-card__inner` in DOM; BW title uses z-index: 3 — raise
-   the link so clicks hit `collection.url` instead of the inert title / image layer. */
+/* Full-card link: raise above inner content so taps reach `collection.url` (both placements). */
 .collection-card > .collection-card__link {
   z-index: 5;
   cursor: pointer;
@@ -342,8 +341,10 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
               filter var(--bw-dur-md) var(--bw-ease-lux);
 }
 
-.collection-card::before,
-.resource-list__item .card-collection::before {
+/* Overlay gradient + gold frame — only when title is on the image (theme: placement “On image”). */
+.collection-card.collection-card--image-bg::before,
+.resource-list__item .collection-card.collection-card--image-bg::before,
+.resource-list__item .card-collection.collection-card--image-bg::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -357,9 +358,9 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   transition: background var(--bw-dur-md) var(--bw-ease-lux);
 }
 
-/* Gold hairline frame on hover */
-.collection-card::after,
-.resource-list__item .card-collection::after {
+.collection-card.collection-card--image-bg::after,
+.resource-list__item .collection-card.collection-card--image-bg::after,
+.resource-list__item .card-collection.collection-card--image-bg::after {
   content: "";
   position: absolute;
   inset: 10px;
@@ -380,20 +381,22 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   .resource-list__item .card-collection:hover img {
     transform: scale(1.08);
   }
-  .collection-card:hover::before,
-  .resource-list__item .card-collection:hover::before {
+  .collection-card.collection-card--image-bg:hover::before,
+  .resource-list__item .collection-card.collection-card--image-bg:hover::before,
+  .resource-list__item .card-collection.collection-card--image-bg:hover::before {
     background: linear-gradient(180deg, rgba(139, 30, 14, 0.1) 0%, rgba(26, 10, 10, 0.7) 100%);
   }
-  .collection-card:hover::after,
-  .resource-list__item .card-collection:hover::after {
+  .collection-card.collection-card--image-bg:hover::after,
+  .resource-list__item .collection-card.collection-card--image-bg:hover::after,
+  .resource-list__item .card-collection.collection-card--image-bg:hover::after {
     border-color: rgba(217, 189, 116, 0.75);
   }
 }
 
-/* Collection tile title: editorial ribbon */
-.collection-card .card-collection__title,
-.collection-card [data-testid="collection-title"],
-.resource-list__item [class*="collection-title"] {
+/* On-image title only — do not force “below image” cards back onto the media (breaks layout + clicks). */
+.collection-card.collection-card--image-bg .card-collection__title,
+.collection-card.collection-card--image-bg [data-testid="collection-title"],
+.resource-list__item .collection-card--image-bg [class*="collection-title"] {
   position: absolute;
   left: 18px;
   right: 18px;
@@ -408,8 +411,9 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   padding: 0 !important;
 }
 
-.collection-card .card-collection__title::after,
-.resource-list__item [class*="collection-title"]::after {
+.collection-card.collection-card--image-bg .card-collection__title::after,
+.collection-card.collection-card--image-bg [data-testid="collection-title"]::after,
+.resource-list__item .collection-card--image-bg [class*="collection-title"]::after {
   content: "→";
   display: inline-block;
   margin-left: 0.6ch;
@@ -421,8 +425,9 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
 }
 
 @media (hover: hover) {
-  .collection-card:hover .card-collection__title::after,
-  .resource-list__item .card-collection:hover [class*="collection-title"]::after {
+  .collection-card.collection-card--image-bg:hover .card-collection__title::after,
+  .collection-card.collection-card--image-bg:hover [data-testid="collection-title"]::after,
+  .resource-list__item .collection-card--image-bg:hover [class*="collection-title"]::after {
     transform: translateX(0);
     opacity: 1;
   }

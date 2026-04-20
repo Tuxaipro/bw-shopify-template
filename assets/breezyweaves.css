@@ -421,46 +421,73 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   }
 }
 
-/* 7 ───────────── Product cards ───────────── */
+/* 7 ───────────── Product cards (best-in-class UX) ─────────────
+   Editorial, magazine-like card. Clean always-on state with a calm
+   hover reveal. Image is the hero; swatches, rating and quick-view
+   layer in progressively without cramming the base layout.
+*/
+
+/* ---- Container ---- */
 .resource-list__item .product-card,
 .resource-list__item .card-product,
 .product-card {
   position: relative;
   overflow: visible;
-  border: 1px solid var(--bw-border, #e8dec6);
-  border-radius: 6px;
-  background: #fff;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  isolation: isolate;
   transition:
     transform var(--bw-dur-md) var(--bw-ease-lux),
-    box-shadow var(--bw-dur-md) var(--bw-ease-lux),
     border-color var(--bw-dur-md) var(--bw-ease-lux);
 }
 
+/* ---- Media well (image) ---- */
 .product-card .product-card__media,
 .product-card .card-gallery,
 .card-product .product-card__media,
 .card-product .card-gallery {
+  position: relative;
   overflow: hidden;
-  border-radius: 5px 5px 0 0;
-  aspect-ratio: 3 / 4;
+  border-radius: 8px;
+  aspect-ratio: 4 / 5;
+  background: var(--bw-ivory, #faf6ec);
+  box-shadow: 0 1px 0 rgba(26, 26, 26, 0.04);
+  transition: box-shadow var(--bw-dur-md) var(--bw-ease-lux);
+}
+
+/* Subtle gold frame that only appears on hover */
+.product-card .product-card__media::after,
+.product-card .card-gallery::after,
+.card-product .card-gallery::after,
+.card-product .product-card__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(217, 189, 116, 0);
+  pointer-events: none;
+  transition: border-color var(--bw-dur-md) var(--bw-ease-lux);
+  z-index: 2;
 }
 
 .product-card .product-card__media img,
 .product-card .card-gallery img,
 .card-product img {
-  transition: transform 900ms var(--bw-ease-lux),
-              opacity 500ms var(--bw-ease-lux);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1100ms var(--bw-ease-lux),
+              opacity 450ms var(--bw-ease-lux);
+  will-change: transform;
 }
 
-/* crossfade to second image on hover (Shopify renders both variants) */
+/* Crossfade to second image on hover */
 .card-gallery__image + .card-gallery__image,
 .product-card__media img + img,
 .card-product__media img + img {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   opacity: 0;
 }
 
@@ -468,13 +495,24 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   .resource-list__item .product-card:hover,
   .resource-list__item .card-product:hover,
   .product-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--bw-shadow-lg);
+    transform: translateY(-2px);
+  }
+  .product-card:hover .product-card__media,
+  .product-card:hover .card-gallery,
+  .card-product:hover .card-gallery,
+  .card-product:hover .product-card__media {
+    box-shadow: 0 18px 40px -22px rgba(139, 30, 14, 0.28),
+                0 6px 14px -8px rgba(26, 26, 26, 0.08);
+  }
+  .product-card:hover .product-card__media::after,
+  .product-card:hover .card-gallery::after,
+  .card-product:hover .card-gallery::after,
+  .card-product:hover .product-card__media::after {
     border-color: rgba(217, 189, 116, 0.55);
   }
   .resource-list__item .product-card:hover .card-gallery img:first-child,
   .product-card:hover .product-card__media img:first-child {
-    transform: scale(1.04);
+    transform: scale(1.05);
   }
   .resource-list__item .product-card:hover .card-gallery__image + .card-gallery__image,
   .product-card:hover .product-card__media img + img,
@@ -483,44 +521,81 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   }
 }
 
-/* Wishlist button */
+/* ---- Badges (top-left) ---- */
+.product-card__badges,
+.bw-badge-row {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 5px;
+  z-index: 4;
+  max-width: calc(100% - 56px);
+}
+
+.bw-badge {
+  font-family: var(--font-body--family);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 2px;
+  line-height: 1;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+.bw-badge--new        { background: var(--bw-red);          color: var(--bw-gold-light); }
+.bw-badge--bestseller { background: var(--bw-ink);          color: var(--bw-gold); }
+.bw-badge--limited    { background: var(--bw-gold-light);   color: var(--bw-red-deep); }
+.bw-badge--sale       { background: #fff;                   color: var(--bw-red-deep);
+                        border: 1px solid var(--bw-red-deep); }
+
+/* ---- Wishlist (top-right, always visible, ghosted) ---- */
 .bw-wishlist-btn {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 36px;
-  height: 36px;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
   border-radius: 999px;
-  border: 1px solid rgba(232, 222, 198, 0.8);
-  background: rgba(255, 255, 255, 0.95);
-  color: var(--bw-red-deep);
+  border: 0;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--bw-ink);
   display: grid;
   place-items: center;
   cursor: pointer;
-  z-index: 4;
+  z-index: 5;
   backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  opacity: 0.92;
+  transform: translateY(0) scale(1);
   transition: transform var(--bw-dur-sm) var(--bw-ease-spring),
               background var(--bw-dur-sm) var(--bw-ease-lux),
-              color var(--bw-dur-sm) var(--bw-ease-lux);
-  opacity: 0;
-  transform: translateY(-4px) scale(0.9);
+              color var(--bw-dur-sm) var(--bw-ease-lux),
+              opacity var(--bw-dur-sm) var(--bw-ease-lux);
 }
-.bw-wishlist-btn svg { width: 16px; height: 16px; }
+.bw-wishlist-btn svg { width: 15px; height: 15px; }
 
 .product-card:hover .bw-wishlist-btn,
 .card-product:hover .bw-wishlist-btn,
-.bw-wishlist-btn:focus-visible,
+.bw-wishlist-btn:hover,
+.bw-wishlist-btn:focus-visible {
+  opacity: 1;
+  background: #fff;
+  color: var(--bw-red-deep);
+  transform: translateY(0) scale(1.05);
+}
+
 .bw-wishlist-btn[aria-pressed="true"] {
   opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.bw-wishlist-btn[aria-pressed="true"] {
   background: var(--bw-red);
   color: var(--bw-gold-light);
-  border-color: var(--bw-red);
 }
-
 .bw-wishlist-btn[aria-pressed="true"] svg {
   animation: bw-heart-pop 450ms var(--bw-ease-spring);
   fill: currentColor;
@@ -532,52 +607,255 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   100% { transform: scale(1); }
 }
 
-/* Badges */
-.product-card__badges,
-.bw-badge-row {
+/* ---- Hover quick-view overlay (slides up from bottom of image) ---- */
+.bw-card-overlay {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  z-index: 3;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 4;
+  transform: translateY(6px);
+  opacity: 0;
+  transition: opacity var(--bw-dur-md) var(--bw-ease-lux),
+              transform var(--bw-dur-md) var(--bw-ease-lux);
 }
 
-.bw-badge {
-  font-size: 0.625rem;
+.product-card .product-card__media,
+.product-card .card-gallery {
+  /* overlay should clip inside the media well */
+  /* (already has overflow hidden; overlay is child of product-card, */
+  /*  so we move it visually to align with the media well via bottom placement) */
+}
+
+/* Position overlay against the media well — use a wrapper-aware selector: */
+.product-card .bw-card-overlay,
+.card-product .bw-card-overlay {
+  /* The card content lives below the media well; we want the overlay to sit
+     at the bottom of the IMAGE, not the whole card. Since the image has
+     aspect-ratio 4/5, we align from the top of the card using a calc fallback
+     by tying to the media well via an absolute stripe just above content. */
+  top: auto;
+  bottom: auto;
+  /* Use container queries where supported; fallback: position from bottom of
+     image using a percentage approximation of the 4:5 ratio isn't reliable,
+     so we instead reposition inside a container — see `.product-card__media`
+     scoped overlay below, which takes precedence. */
+}
+
+/* Preferred: overlay inside the media well when available */
+.product-card__media .bw-card-overlay,
+.card-gallery .bw-card-overlay {
+  top: auto;
+}
+
+.bw-card-overlay__cta {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  font-family: var(--font-body--family);
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  padding: 4px 9px;
-  border-radius: 2px;
-  backdrop-filter: blur(4px);
+  color: var(--bw-ink);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 999px;
+  box-shadow: 0 6px 16px -6px rgba(26, 26, 26, 0.25);
+  white-space: nowrap;
 }
-.bw-badge--new       { background: var(--bw-red);     color: var(--bw-gold-light); }
-.bw-badge--bestseller{ background: var(--bw-ink);     color: var(--bw-gold); }
-.bw-badge--limited   { background: var(--bw-gold-light); color: var(--bw-red-deep); }
-.bw-badge--sale      { background: #fff;              color: var(--bw-red-deep); border: 1px solid var(--bw-red-deep); }
+.bw-card-overlay__cta svg {
+  transition: transform var(--bw-dur-sm) var(--bw-ease-lux);
+}
 
-/* Product card body: Playfair title + refined meta */
+@media (hover: hover) {
+  .product-card:hover .bw-card-overlay,
+  .card-product:hover .bw-card-overlay,
+  .product-card:focus-within .bw-card-overlay {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .product-card:hover .bw-card-overlay__cta svg {
+    transform: translateX(2px);
+  }
+}
+
+/* Hide overlay on touch */
+@media (pointer: coarse) {
+  .bw-card-overlay { display: none; }
+}
+
+/* ---- Card content: title + price ---- */
+.product-card__content,
+.card-product__content {
+  padding-top: 12px !important;
+  gap: 6px !important;
+}
+
 .product-card__title,
-.card-product [class*="title"] {
-  font-family: var(--font-heading--family);
-  font-weight: 500;
-  letter-spacing: 0.002em;
+.card-product [class*="title"],
+.product-card [class*="title"] {
+  font-family: var(--font-heading--family) !important;
+  font-weight: 500 !important;
+  font-size: 0.975rem !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0.002em !important;
+  color: var(--bw-ink, #1a1a1a) !important;
+  text-wrap: balance;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.7em; /* reserve space for two lines so cards align */
+  margin: 0 !important;
+  text-align: left !important;
 }
 
 .product-card__price,
-.card-product [class*="price"] {
-  color: var(--bw-red-deep);
-  font-weight: 500;
+.card-product [class*="price"],
+.product-card [class*="price"] {
+  font-family: var(--font-body--family) !important;
+  color: var(--bw-red-deep) !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.01em !important;
+  text-align: left !important;
 }
 
-/* Quick-add button */
+/* Compare-at price styling */
+.product-card [class*="price"] s,
+.product-card [class*="price"] del,
+.card-product [class*="price"] s,
+.card-product [class*="price"] del {
+  color: rgba(26, 26, 26, 0.45) !important;
+  font-weight: 400 !important;
+  margin-left: 6px;
+}
+
+/* ---- Meta chip row (fabric · colors count) ---- */
+.bw-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body--family);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 26, 0.6);
+  margin-top: 10px;
+  order: 999; /* push below whatever else is rendered via {{ children }} */
+}
+
+.bw-card-meta__chip {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid rgba(26, 26, 26, 0.12);
+  border-radius: 999px;
+  background: rgba(250, 246, 236, 0.8);
+  color: var(--bw-ink);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  font-size: 0.65rem;
+}
+
+.bw-card-meta__dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--bw-gold, #d9bd74);
+  display: inline-block;
+}
+
+.bw-card-meta__count {
+  color: rgba(26, 26, 26, 0.55);
+}
+
+/* ---- Rating (gold stars) ---- */
+.bw-card-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body--family);
+  font-size: 0.72rem;
+  color: rgba(26, 26, 26, 0.55);
+  margin-top: 4px;
+  order: 1000;
+}
+
+.bw-card-rating__stars {
+  position: relative;
+  display: inline-block;
+  font-size: 0.78rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: rgba(26, 26, 26, 0.18);
+}
+.bw-card-rating__stars-bg {
+  display: block;
+}
+.bw-card-rating__stars-fg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  width: var(--bw-star-fill, 0%);
+  color: var(--bw-gold, #d9bd74);
+  white-space: nowrap;
+}
+
+/* ---- Color swatches row ---- */
+.bw-card-swatches {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  order: 1001;
+  flex-wrap: wrap;
+}
+
+.bw-card-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid rgba(26, 26, 26, 0.12);
+  box-shadow: inset 0 0 0 2px #fff;
+  background-clip: padding-box;
+  position: relative;
+  cursor: default;
+  transition: transform var(--bw-dur-sm) var(--bw-ease-spring),
+              border-color var(--bw-dur-sm) var(--bw-ease-lux);
+}
+.bw-card-swatch:hover {
+  transform: scale(1.15);
+  border-color: var(--bw-gold);
+}
+
+.bw-card-swatch--more {
+  width: auto;
+  height: auto;
+  border: 0;
+  box-shadow: none;
+  background: transparent !important;
+  color: rgba(26, 26, 26, 0.6);
+  font-family: var(--font-body--family);
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding-left: 2px;
+}
+
+/* ---- Quick-add submit (fallback native Shopify button) ---- */
 .product-card .quick-add__submit,
 .product-card__quick-add,
 .card-product .quick-add__submit {
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(6px);
   transition: opacity var(--bw-dur-md) var(--bw-ease-lux),
               transform var(--bw-dur-md) var(--bw-ease-lux);
 }

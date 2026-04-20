@@ -91,13 +91,62 @@
     </span>
   </a>
 
-  {%- comment -%} Breezyweaves: badges + wishlist overlay {%- endcomment -%}
+  {%- comment -%} Breezyweaves: badges + wishlist + swatches + quick-view overlay {%- endcomment -%}
   {%- unless onboarding -%}
-    {%- assign bw_has_badges = false -%}
-    {%- if product.tags contains 'new' or product.tags contains 'New' -%}{% assign bw_has_badges = true %}{%- endif -%}
-    {%- if product.tags contains 'bestseller' or product.tags contains 'Bestseller' -%}{% assign bw_has_badges = true %}{%- endif -%}
-    {%- if product.tags contains 'limited' or product.tags contains 'Limited' -%}{% assign bw_has_badges = true %}{%- endif -%}
-    {%- if product.compare_at_price > product.price -%}{% assign bw_has_badges = true %}{%- endif -%}
+    {%- liquid
+      assign bw_has_badges = false
+      if product.tags contains 'new' or product.tags contains 'New'
+        assign bw_has_badges = true
+      endif
+      if product.tags contains 'bestseller' or product.tags contains 'Bestseller'
+        assign bw_has_badges = true
+      endif
+      if product.tags contains 'limited' or product.tags contains 'Limited'
+        assign bw_has_badges = true
+      endif
+      if product.compare_at_price > product.price
+        assign bw_has_badges = true
+      endif
+
+      # Locate a color/colour option for swatches
+      assign bw_color_option = null
+      for opt in product.options_with_values
+        assign opt_name_l = opt.name | downcase
+        if opt_name_l contains 'color' or opt_name_l contains 'colour'
+          assign bw_color_option = opt
+          break
+        endif
+      endfor
+
+      # Sale calculation
+      assign bw_on_sale = false
+      assign bw_discount_pct = 0
+      if product.compare_at_price > product.price
+        assign bw_on_sale = true
+        assign bw_savings = product.compare_at_price | minus: product.price | times: 100.0
+        assign bw_discount_pct = bw_savings | divided_by: product.compare_at_price | round
+      endif
+
+      # Rating (optional metafield: product.metafields.reviews.rating with value.value + value.scale_max)
+      assign bw_rating_value = 0
+      assign bw_rating_count = 0
+      if product.metafields.reviews.rating.value != blank
+        assign bw_rating_value = product.metafields.reviews.rating.value.rating | default: product.metafields.reviews.rating.value | times: 1.0
+      endif
+      if product.metafields.reviews.rating_count != blank
+        assign bw_rating_count = product.metafields.reviews.rating_count.value | times: 1
+      endif
+
+      # Fabric chip: first product tag that isn't a control tag
+      assign bw_fabric = ''
+      for tag in product.tags
+        assign tag_l = tag | downcase
+        unless tag_l == 'new' or tag_l == 'bestseller' or tag_l == 'limited' or tag_l == 'sale'
+          assign bw_fabric = tag
+          break
+        endunless
+      endfor
+    -%}
 
     {%- if bw_has_badges -%}
       <div class="bw-badge-row" aria-hidden="true">
@@ -110,8 +159,10 @@
         {%- if product.tags contains 'limited' or product.tags contains 'Limited' -%}
           <span class="bw-badge bw-badge--limited">Limited</span>
         {%- endif -%}
-        {%- if product.compare_at_price > product.price -%}
-          <span class="bw-badge bw-badge--sale">Sale</span>
+        {%- if bw_on_sale -%}
+          <span class="bw-badge bw-badge--sale">
+            {%- if bw_discount_pct > 0 -%}−{{ bw_discount_pct }}%{%- else -%}Sale{%- endif -%}
+          </span>
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -127,6 +178,63 @@
         <path d="M10 17.25s-6.25-3.75-6.25-8.5a3.5 3.5 0 0 1 6.25-2.2 3.5 3.5 0 0 1 6.25 2.2c0 4.75-6.25 8.5-6.25 8.5z" stroke-linejoin="round"/>
       </svg>
     </button>
+
+    {%- comment -%} Quick view overlay — sits over the image, only activates on hover/focus {%- endcomment -%}
+    <div class="bw-card-overlay" aria-hidden="true">
+      <span class="bw-card-overlay__cta">
+        <span>Quick view</span>
+        <svg viewBox="0 0 14 14" width="12" height="12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M1 7h12M8 2l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </div>
+
+    {%- comment -%} Meta row + rating — rendered into the card content area via CSS positioning {%- endcomment -%}
+    <div class="bw-card-meta" data-bw-card-meta>
+      {%- if bw_fabric != '' -%}
+        <span class="bw-card-meta__chip">{{ bw_fabric | capitalize }}</span>
+      {%- endif -%}
+      {%- if bw_color_option and bw_color_option.values.size > 1 -%}
+        <span class="bw-card-meta__dot" aria-hidden="true"></span>
+        <span class="bw-card-meta__count">{{ bw_color_option.values.size }} colors</span>
+      {%- endif -%}
+    </div>
+
+    {%- if bw_rating_value > 0 -%}
+      <div class="bw-card-rating" data-bw-card-rating aria-label="Rated {{ bw_rating_value }} out of 5">
+        <span class="bw-card-rating__stars" style="--bw-star-fill: {{ bw_rating_value | divided_by: 5.0 | times: 100 }}%;" aria-hidden="true">
+          <span class="bw-card-rating__stars-bg">★★★★★</span>
+          <span class="bw-card-rating__stars-fg">★★★★★</span>
+        </span>
+        {%- if bw_rating_count > 0 -%}
+          <span class="bw-card-rating__count">({{ bw_rating_count }})</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if bw_color_option and bw_color_option.values.size > 1 -%}
+      <div class="bw-card-swatches" data-bw-card-swatches aria-hidden="true">
+        {%- assign bw_swatch_limit = 5 -%}
+        {%- assign bw_swatch_index = 0 -%}
+        {%- for value in bw_color_option.values -%}
+          {%- if bw_swatch_index < bw_swatch_limit -%}
+            {%- assign value_handle = value | handleize -%}
+            {%- assign swatch_bg = value | downcase -%}
+            <span
+              class="bw-card-swatch"
+              title="{{ value | escape }}"
+              style="background: {{ swatch_bg | replace: ' ', '' }}; --bw-swatch-name: '{{ value | escape }}';"
+              data-swatch-value="{{ value_handle }}"
+            ></span>
+            {%- assign bw_swatch_index = bw_swatch_index | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if bw_color_option.values.size > bw_swatch_limit -%}
+          {%- assign bw_swatch_more = bw_color_option.values.size | minus: bw_swatch_limit -%}
+          <span class="bw-card-swatch bw-card-swatch--more" aria-hidden="true">+{{ bw_swatch_more }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   {%- endunless -%}
 
   <div

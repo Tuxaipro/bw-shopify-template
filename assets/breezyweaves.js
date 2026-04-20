@@ -367,6 +367,54 @@
     });
   };
 
+  /* ───────────── Product card DOM relocation ─────────────
+     The product-card snippet injects four helper nodes as direct children
+     of <product-card>: .bw-card-overlay, .bw-card-meta, .bw-card-rating,
+     .bw-card-swatches. We relocate them into their correct visual homes:
+       - .bw-card-overlay  → into the media well (.product-card__media / .card-gallery)
+       - .bw-card-meta, .bw-card-rating, .bw-card-swatches → inside .product-card__content
+     This is idempotent: we bail if the node is already in the right parent.
+  */
+  const initProductCards = () => {
+    const cards = document.querySelectorAll('product-card, .product-card, .card-product');
+    cards.forEach((card) => {
+      if (card.dataset.bwEnhanced === '1') return;
+
+      const media =
+        card.querySelector('.product-card__media') ||
+        card.querySelector('.card-gallery') ||
+        card.querySelector('[class*="card-gallery"]') ||
+        card.querySelector('[class*="product-card__media"]');
+
+      const content =
+        card.querySelector('.product-card__content') ||
+        card.querySelector('.card-product__content') ||
+        card.querySelector('[class*="product-card__content"]');
+
+      // Relocate overlay into media well
+      const overlay = card.querySelector(':scope > .bw-card-overlay');
+      if (overlay && media && overlay.parentElement !== media) {
+        media.appendChild(overlay);
+      }
+
+      // Relocate meta / rating / swatches into content area (appended in order)
+      if (content) {
+        [
+          ':scope > .bw-card-meta',
+          ':scope > .bw-card-rating',
+          ':scope > .bw-card-swatches',
+        ].forEach((sel) => {
+          const node = card.querySelector(sel);
+          if (node && node.parentElement !== content) {
+            content.appendChild(node);
+          }
+        });
+      }
+
+      card.dataset.bwEnhanced = '1';
+    });
+  };
+
   /* ───────────── Init ───────────── */
   const boot = () => {
     try { initHeaderScroll(); } catch (e) { console.warn('[bw] header scroll', e); }
@@ -378,6 +426,7 @@
     try { initFreeShip(); } catch (e) { console.warn('[bw] free ship', e); }
     try { initStickyATC(); } catch (e) { console.warn('[bw] sticky atc', e); }
     try { initAnnouncementHover(); } catch (e) { console.warn('[bw] announcement', e); }
+    try { initProductCards(); } catch (e) { console.warn('[bw] product cards', e); }
   };
 
   if (document.readyState === 'loading') {
@@ -386,9 +435,10 @@
     boot();
   }
 
-  // Re-init reveals and wishlist state after Shopify section re-renders
+  // Re-init reveals, card enhancements, and wishlist state after Shopify section re-renders
   document.addEventListener('shopify:section:load', () => {
     try { initReveals(); } catch (e) { /* noop */ }
+    try { initProductCards(); } catch (e) { /* noop */ }
     try {
       const wishlist = loadWishlist();
       document.querySelectorAll('.bw-wishlist-btn').forEach((btn) => {

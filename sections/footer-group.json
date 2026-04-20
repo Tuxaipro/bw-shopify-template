@@ -127,38 +127,12 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "text_breezy_shipping": {
-              "type": "text",
-              "settings": {
-                "text": "<p><strong>Shipping:</strong> USA · Processed within 48 hours · Delivery in 3–4 business days.<br><strong>Returns:</strong> All sales are final.</p>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "text_breezy_title",
             "text_breezy_mission",
-            "text_breezy_contact",
-            "text_breezy_shipping"
+            "text_breezy_contact"
           ]
         },
         "group_H6VpwJ": {
@@ -200,35 +174,10 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_LWt8Pz": {
+            "text_Rpjj6x": {
               "type": "text",
               "settings": {
-                "text": "<h2>Join the Breezyweaves list</h2>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_f9CFLH": {
-              "type": "text",
-              "settings": {
-                "text": "<p>Get <strong>10% off your first order</strong>—new arrivals, bestsellers, and restocks in your inbox.</p>",
+                "text": "<p><strong>Shipping:</strong> USA · Processed within 48 hours · Delivery in 3–4 business days.<br/><strong>Returns:</strong> All sales are final.</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -249,37 +198,10 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "email_signup_WLFpGk": {
-              "type": "email-signup",
-              "settings": {
-                "width": "fill",
-                "custom_width": 100,
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "heading": "",
-                "heading_preset": "h3",
-                "border_style": "all",
-                "border_width": 1,
-                "border_radius": 100,
-                "input_type_preset": "paragraph",
-                "style_class": "button-unstyled",
-                "display_type": "arrow",
-                "label": "Sign up",
-                "integrated_button": true,
-                "button_type_preset": "paragraph",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
             }
           },
           "block_order": [
-            "text_LWt8Pz",
-            "text_f9CFLH",
-            "email_signup_WLFpGk"
+            "text_Rpjj6x"
           ]
         }
       },

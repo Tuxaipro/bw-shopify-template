@@ -325,6 +325,7 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
   overflow: hidden;
   border-radius: var(--bw-tile-radius);
   isolation: isolate;
+  cursor: pointer;
   transition: transform var(--bw-dur-md) var(--bw-ease-lux),
               box-shadow var(--bw-dur-md) var(--bw-ease-lux);
 }

@@ -12,7 +12,8 @@
  *   8. Sticky mobile ATC visibility                → body[data-bw-atc-visible]
  *   9. Announcement-bar marquee pause on hover
  *  10. Collection card click → navigate to collection
- *  11. Respect prefers-reduced-motion + pointer:coarse
+ *  11. PageFly cart-count sync (dispatch cart:update after PF ATC)
+ *  12. Respect prefers-reduced-motion + pointer:coarse
  *
  * No external libraries. Loaded as a module via theme.liquid.
  */
@@ -416,6 +417,56 @@
     });
   };
 
+  /* ───────────── 11. PageFly cart-count sync ─────────────
+     PageFly's ATC button (data-pf-type="ProductATC2") adds to cart via its own
+     fetch() call but never dispatches the theme's "cart:update" event, so
+     cart-icon never updates. We monkey-patch window.fetch to detect successful
+     /cart/add responses and fire the event with the fresh total count.
+  */
+  const initPageflyCartSync = () => {
+    const originalFetch = window.fetch;
+    window.fetch = function (...args) {
+      const promise = originalFetch.apply(this, args);
+
+      // Check if this is a cart/add request
+      const url = typeof args[0] === 'string' ? args[0] : (args[0]?.url || '');
+      if (!/\/cart\/add/i.test(url)) return promise;
+
+      promise
+        .then((response) => response.clone().json())
+        .then((data) => {
+          // PageFly returns the added item(s); we need the *total* cart count.
+          // Fetch the full cart to get item_count.
+          if (data && !data.status) {
+            return originalFetch('/cart.js').then((r) => r.json());
+          }
+          return null;
+        })
+        .then((cart) => {
+          if (!cart || !cart.item_count) return;
+
+          // Dispatch the theme's cart:update event so cart-icon picks it up
+          document.dispatchEvent(
+            new CustomEvent('cart:update', {
+              bubbles: true,
+              detail: {
+                resource: cart,
+                data: {
+                  itemCount: cart.item_count,
+                  source: 'pagefly-sync', // not 'product-form-component' so cart-icon SETS (not adds)
+                },
+              },
+            })
+          );
+        })
+        .catch(() => {
+          /* silently ignore — don't break the original request */
+        });
+
+      return promise;
+    };
+  };
+
   /* ───────────── Init ───────────── */
   const boot = () => {
     try { initHeaderScroll(); } catch (e) { console.warn('[bw] header scroll', e); }
@@ -429,6 +480,7 @@
     try { initAnnouncementHover(); } catch (e) { console.warn('[bw] announcement', e); }
     try { initProductCards(); } catch (e) { console.warn('[bw] product cards', e); }
     try { initCollectionCards(); } catch (e) { console.warn('[bw] collection cards', e); }
+    try { initPageflyCartSync(); } catch (e) { console.warn('[bw] pagefly cart sync', e); }
   };
 
   if (document.readyState === 'loading') {

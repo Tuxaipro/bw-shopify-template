@@ -1759,6 +1759,301 @@ button.breezy-size-chart-open {
   font-size: 0.7rem;
 }
 
+/* 10b ──────────── PageFly PDP — premium look ──────────── */
+
+/* ---- Overall product box: two-column layout ---- */
+[data-pf-type="ProductBox"] > .pf-product-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: flex-start;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding: clamp(1.5rem, 3vw, 3rem) clamp(1rem, 2vw, 2rem);
+}
+
+/* Media column */
+[data-pf-type="ProductBox"] [data-pf-type="ProductMedia2"] {
+  flex: 1 1 48%;
+  min-width: 320px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Details column */
+[data-pf-type="ProductBox"] > .pf-product-form > [data-pf-type="FlexBlock"] {
+  flex: 1 1 44%;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ---- Title ---- */
+[data-pf-type="ProductTitle"] {
+  font-family: var(--font-heading--family) !important;
+  font-size: clamp(1.7rem, 3vw, 2.4rem) !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: var(--bw-ink) !important;
+  margin: 0 0 0.6rem !important;
+}
+
+/* ---- Price row ---- */
+[data-pf-type="ProductPrice2"] {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 0.15rem;
+}
+
+[data-pf-type="ProductPrice2"] [data-product-type="price"] {
+  font-family: var(--font-heading--family) !important;
+  font-size: clamp(1.35rem, 2.2vw, 1.65rem) !important;
+  font-weight: 600 !important;
+  color: var(--bw-red-deep) !important;
+  letter-spacing: -0.01em;
+}
+
+[data-pf-type="ProductPrice2"] [data-product-type="compare_at_price"] {
+  font-size: 0.95rem !important;
+  color: var(--bw-muted) !important;
+  text-decoration: line-through;
+}
+
+/* ---- Stars row ---- */
+.pf-icon-1.pfa-star {
+  color: var(--bw-gold) !important;
+  font-size: 0.9rem;
+}
+
+/* ---- Dividers ---- */
+[data-pf-type="ProductBox"] .pf-divider-1 {
+  border: none !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, var(--bw-border), transparent 85%) !important;
+  margin: 1rem 0 !important;
+}
+
+/* ---- Description ---- */
+[data-pf-type="ProductDescription"] {
+  font-family: var(--font-body--family);
+  font-size: clamp(0.9rem, 1.15vw, 1rem);
+  line-height: 1.75;
+  color: var(--bw-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ---- Size guide ---- */
+[data-pf-type="ProductBox"] .pf-heading-1-h3:has(.pfa-ruler-horizontal) {
+  font-family: var(--font-heading--family) !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  color: var(--bw-ink) !important;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  margin: 0.5rem 0;
+  transition: color var(--bw-dur-sm) var(--bw-ease-lux);
+}
+[data-pf-type="ProductBox"] .pf-heading-1-h3:has(.pfa-ruler-horizontal):hover {
+  color: var(--bw-red-deep) !important;
+}
+
+/* ---- Quantity selector ---- */
+[data-pf-type="ProductQuantity"] {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--bw-border);
+  border-radius: 40px;
+  overflow: hidden;
+  margin: 0.75rem 0 1.25rem;
+  height: 48px;
+}
+
+[data-pf-type="ProductQuantity"] button {
+  width: 44px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--bw-ink);
+  transition: background var(--bw-dur-sm) var(--bw-ease-lux);
+}
+[data-pf-type="ProductQuantity"] button:hover {
+  background: var(--bw-ivory);
+}
+[data-pf-type="ProductQuantity"] button svg {
+  width: 14px;
+  height: 14px;
+}
+
+[data-pf-type="ProductQuantity"] input[type="number"] {
+  width: 48px;
+  text-align: center;
+  border: none;
+  border-left: 1px solid var(--bw-border);
+  border-right: 1px solid var(--bw-border);
+  font-family: var(--font-heading--family);
+  font-size: 1rem;
+  font-weight: 500;
+  background: transparent;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  color: var(--bw-ink);
+}
+[data-pf-type="ProductQuantity"] input::-webkit-inner-spin-button,
+[data-pf-type="ProductQuantity"] input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ================================================================
+   BUTTONS — "Buy with Shop" + "Add to Cart" on the SAME LINE
+   ================================================================ */
+/* Wrapper for both buttons: force a flex row */
+[data-pf-type="ProductDynamicCheckout"],
+[data-pf-type="ProductATC2"] {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Make the parent flex-block render these two as a row.
+   The parent is a PageFly FlexBlock — by default it's column.
+   We override just the last portion (buttons) via CSS grid on a wrapper,
+   but since we can't add a wrapper, we use the parent's flex-wrap. */
+
+/* Target: the details column that holds both buttons as direct children */
+[data-pf-type="ProductBox"] > .pf-product-form > [data-pf-type="FlexBlock"] {
+  flex-wrap: wrap;
+}
+
+/* The dynamic checkout and ATC button should share a row */
+[data-pf-type="ProductDynamicCheckout"] {
+  flex: 1 1 45%;
+  min-width: 180px;
+  order: 1;
+}
+
+[data-pf-type="ProductATC2"] {
+  flex: 1 1 45%;
+  min-width: 180px;
+  order: 2;
+}
+
+/* Shopify dynamic checkout button styling */
+[data-pf-type="ProductDynamicCheckout"] .shopify-payment-button {
+  width: 100%;
+}
+
+[data-pf-type="ProductDynamicCheckout"] .shopify-payment-button__button {
+  border-radius: 8px !important;
+  height: 54px !important;
+  font-size: 1rem !important;
+}
+
+/* Add to Cart button — premium BreezyWeaves style */
+[data-pf-type="ProductATC2"] {
+  height: 54px;
+  border-radius: 8px;
+  font-family: var(--font-heading--family) !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--bw-red-deep, #8b1e0e) !important;
+  color: #fff !important;
+  border: none !important;
+  cursor: pointer;
+  transition:
+    background var(--bw-dur-md) var(--bw-ease-lux),
+    transform var(--bw-dur-sm) var(--bw-ease-lux),
+    box-shadow var(--bw-dur-md) var(--bw-ease-lux);
+}
+[data-pf-type="ProductATC2"]:hover {
+  background: color-mix(in srgb, var(--bw-red-deep, #8b1e0e) 88%, black) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(139, 30, 14, 0.25);
+}
+[data-pf-type="ProductATC2"]:active {
+  transform: translateY(0);
+}
+
+/* "More payment options" link below the buttons */
+.shopify-payment-button__more-options,
+more-payment-options-link {
+  order: 3;
+  flex-basis: 100%;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.85rem !important;
+  color: var(--bw-muted);
+}
+
+/* ---- Variant swatches premium ---- */
+[data-pf-type="ProductVariantSwatches"] .pf-variant-label {
+  font-family: var(--font-heading--family) !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bw-ink) !important;
+  margin-bottom: 0.5rem;
+}
+
+[data-pf-type="ProductVariantSwatches"] .pf-vs-radio label {
+  border: 1px solid var(--bw-border);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-body--family);
+  font-size: 0.85rem;
+  color: var(--bw-ink);
+  transition: border-color var(--bw-dur-sm) var(--bw-ease-lux),
+              background var(--bw-dur-sm) var(--bw-ease-lux);
+  cursor: pointer;
+}
+[data-pf-type="ProductVariantSwatches"] .pf-vs-radio input:checked + label {
+  border-color: var(--bw-red-deep);
+  background: rgba(139, 30, 14, 0.05);
+  color: var(--bw-red-deep);
+  font-weight: 500;
+}
+
+/* ---- Reviews text ---- */
+[data-pf-type="ProductBox"] .pf-heading-1-h3:not(:has(.pfa)) {
+  font-family: var(--font-body--family) !important;
+  font-size: 0.85rem !important;
+  font-weight: 400 !important;
+  color: var(--bw-muted) !important;
+}
+
+/* ---- Mobile adjustments ---- */
+@media screen and (max-width: 749px) {
+  [data-pf-type="ProductBox"] > .pf-product-form {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  [data-pf-type="ProductBox"] [data-pf-type="ProductMedia2"],
+  [data-pf-type="ProductBox"] > .pf-product-form > [data-pf-type="FlexBlock"] {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+  [data-pf-type="ProductDynamicCheckout"],
+  [data-pf-type="ProductATC2"] {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+  [data-pf-type="ProductTitle"] {
+    font-size: 1.5rem !important;
+  }
+}
+
 /* Sticky mobile add-to-cart */
 @media (max-width: 749px) {
   sticky-add-to-cart,

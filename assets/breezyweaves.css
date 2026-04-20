@@ -557,7 +557,7 @@ body[data-bw-scrolled="1"] header-component .header__logo svg {
 /* ---- Wishlist (top-right, always visible, ghosted) ---- */
 .bw-wishlist-btn {
   position: absolute;
-  top: 12px;
+  top: 15px;
   right: 12px;
   width: 34px;
   height: 34px;

@@ -693,13 +693,22 @@ slideshow-component.resource-list__carousel slideshow-slide {
   .bw-card-overlay { display: none; }
 }
 
-/* ---- Card content: title + price ---- */
+/* ---- Card content: title + price ----
+   Do not use padding-top on the content wrapper: it sits above the gallery (first flex
+   child) and creates a visible ivory strip under the card border. Use gap for space
+   between gallery and title instead. */
 .product-card__content,
 .card-product__content {
-  padding-top: 12px !important;
-  gap: 6px !important;
+  padding-top: 0 !important;
+  gap: 12px !important;
   background: var(--bw-ivory, #faf6ec);
   border-radius: 0 0 10px 10px;
+}
+
+/* Gallery block can carry theme “Top” padding; zero it inside cards so the image meets the card top */
+.product-card .card-gallery.spacing-style,
+.card-product .card-gallery.spacing-style {
+  --padding-block-start: 0px !important;
 }
 
 .product-card__title,

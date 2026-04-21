@@ -171,7 +171,7 @@
                     "text-shipping": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Free shipping on orders over ₹1,999</p>",
+                        "text": "<p>Free shipping across the US</p>",
                         "type_preset": "paragraph-sm",
                         "alignment": "left",
                         "padding-block-start": 0,
@@ -210,7 +210,7 @@
                     "text-returns": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Easy 7-day returns &amp; exchanges</p>",
+                        "text": "<p>Processed &amp; shipped within 48 hours</p>",
                         "type_preset": "paragraph-sm",
                         "alignment": "left",
                         "padding-block-start": 0,
@@ -316,7 +316,7 @@
                     "text": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Dispatched in 2–3 business days. Free shipping on orders above ₹1,999. Easy 7-day returns for unused pieces with original tags.</p>"
+                        "text": "<p>Dispatched in 48 hours. Free shipping across the US with delivery in 3–4 business days. All sales are final — please review the size guide before ordering.</p>"
                       }
                     }
                   },

@@ -2817,3 +2817,136 @@ footer .utilities a[href*="instagram"]:hover {
   .bw-wishlist-btn { opacity: 1; transform: none; }
   .product-card:hover { transform: none; }
 }
+
+/* ───────────── Native PDP (product-information section) ─────────────
+   Rendered by sections/product-information.liquid + blocks/_product-details.liquid.
+   Target `.product-information__grid` + `.product-details` block children directly. */
+.product-information__grid {
+  align-items: start;
+}
+
+/* Generous left column for the gallery, comfortable info column on desktop */
+@media (min-width: 990px) {
+  .product-information__grid.product-information--media-left,
+  .product-information__grid.product-information--media-right {
+    --product-info-col: clamp(380px, 38%, 520px);
+    gap: clamp(24px, 3vw, 48px) !important;
+  }
+}
+
+/* Breadcrumb (first text block inside product details) */
+.product-details > .group-block > .group > .group-block:first-of-type .rte,
+.product-details .group .group-block:first-of-type .rte:has(a[href="/"]) {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground-rgb) / 0.58);
+}
+.product-details .group .group-block:first-of-type .rte a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--bw-dur-sm) var(--bw-ease-lux);
+}
+.product-details .group .group-block:first-of-type .rte a:hover {
+  border-bottom-color: currentColor;
+}
+
+/* Product title heading rendered by the text block */
+.product-details h1 {
+  font-family: var(--font-heading--family);
+  font-weight: 500;
+  line-height: 1.1;
+  font-size: clamp(1.75rem, 2.8vw, 2.35rem) !important;
+  letter-spacing: 0.005em;
+  margin: 0.15rem 0 0.35rem;
+  color: var(--bw-ink, #1a1a1a);
+}
+
+/* Price in the PDP info column */
+.product-details .price,
+.product-details [class*="price"] {
+  font-family: var(--font-heading--family);
+  color: var(--bw-red-deep);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+  letter-spacing: 0.01em;
+}
+
+/* Rating row gets a touch of warm gold */
+.product-details .rating-wrapper .rating {
+  --star-fill-color: var(--bw-gold);
+  --star-fill-color-rgb: 217, 189, 116;
+}
+
+/* Perks grid — small, muted, evenly spaced */
+.product-details .group .group-block:has(.svg-wrapper) .rte,
+.product-details .group .group-block:has([class*="icon"]) .rte {
+  font-size: 0.85rem;
+  color: rgb(var(--color-foreground-rgb) / 0.72);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Buy buttons block: primary button sits on deep red BW token */
+.product-details .buy-buttons .add-to-cart-button,
+.product-details .buy-buttons button[type="submit"] {
+  background: var(--bw-red-deep) !important;
+  color: #fff !important;
+  border-radius: 2px !important;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.product-details .buy-buttons .add-to-cart-button:hover {
+  background: var(--bw-ink) !important;
+  color: var(--bw-gold) !important;
+}
+
+/* Accordion refinement — the existing `.accordion details` rules handle chrome;
+   just tighten the inner rte type for consistency. */
+.product-details .accordion .rte {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: rgb(var(--color-foreground-rgb) / 0.82);
+}
+
+/* Product description block */
+.product-details .product-description,
+.product-details .product__description,
+.product-details .rte:not(.product-details .group-block:first-of-type .rte) {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgb(var(--color-foreground-rgb) / 0.86);
+  max-width: 40rem;
+}
+
+/* Media gallery: warm off-white canvas behind images so sarees read cleanly */
+.product-information .product-media-container,
+.product-information [class*="media-gallery"] {
+  background: var(--bw-cream, #fdf6ec);
+  border-radius: 6px;
+}
+
+/* "You may also like" — center the heading, let the grid breathe */
+.product-recommendations .section-resource-list__content {
+  text-align: center;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+.product-recommendations .section-resource-list__content :is(h2, .h2, h3, .h3) {
+  font-family: var(--font-heading--family);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  letter-spacing: 0.02em;
+  margin: 0;
+  color: var(--bw-ink, #1a1a1a);
+}
+.product-recommendations .section-resource-list__content :is(h2, .h2, h3, .h3)::after {
+  content: "";
+  display: block;
+  width: 42px;
+  height: 2px;
+  background: var(--bw-gold);
+  margin: 0.85rem auto 0;
+  opacity: 0.85;
+}

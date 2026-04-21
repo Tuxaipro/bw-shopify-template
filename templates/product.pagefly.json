@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "pagefly-product-section": {
+      "type": "pagefly-product-section",
+      "settings": {}
+    }
+  },
+  "order": [
+    "pagefly-product-section"
+  ]
+}

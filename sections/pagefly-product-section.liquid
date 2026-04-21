@@ -1,0 +1,499 @@
+{
+  "sections": {
+    "main": {
+      "type": "product-information",
+      "blocks": {
+        "media-gallery": {
+          "type": "_product-media-gallery",
+          "static": true,
+          "settings": {
+            "media_presentation": "carousel",
+            "media_columns": "one",
+            "image_gap": 12,
+            "slideshow_controls_style": "thumbnails",
+            "slideshow_mobile_controls_style": "dots",
+            "thumbnail_position": "left",
+            "thumbnail_width": 72,
+            "thumbnail_radius": 4,
+            "aspect_ratio": "1/1.25",
+            "constrain_to_viewport": true,
+            "media_fit": "cover",
+            "media_radius": 6,
+            "extend_media": false,
+            "zoom": true,
+            "video_loop": false,
+            "hide_variants": false,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "product-details": {
+          "type": "_product-details",
+          "static": true,
+          "settings": {
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "height": "fit",
+            "gap": 14,
+            "sticky_details_desktop": true,
+            "inherit_color_scheme": true,
+            "border": "none",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "breadcrumb": {
+              "type": "text",
+              "settings": {
+                "text": "<p><a href=\"/\">Home</a> &nbsp;/&nbsp; <a href=\"{{ routes.all_products_collection_url }}\">Shop</a> &nbsp;/&nbsp; {{ closest.product.title }}</p>",
+                "type_preset": "paragraph-sm",
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 4,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "title": {
+              "type": "text",
+              "settings": {
+                "text": "<h1>{{ closest.product.title }}</h1>",
+                "type_preset": "h2",
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "reviews": {
+              "type": "review",
+              "settings": {
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 4,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_tax_info": true,
+                "type_preset": "h4",
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 8,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "variant-picker": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "pills",
+                "padding-block-start": 0,
+                "padding-block-end": 8,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "buy-buttons": {
+              "type": "buy-buttons",
+              "settings": {
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": {
+                    "style_class": "button-primary"
+                  }
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "static": true,
+                  "settings": {}
+                }
+              },
+              "block_order": []
+            },
+            "perks": {
+              "type": "group",
+              "settings": {
+                "width": "custom",
+                "custom_width": 100,
+                "padding-block-start": 8,
+                "padding-block-end": 4,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "content_direction": "column",
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 8,
+                "inherit_color_scheme": true,
+                "border": "none"
+              },
+              "blocks": {
+                "perk-shipping": {
+                  "type": "group",
+                  "settings": {
+                    "width": "custom",
+                    "custom_width": 100,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "content_direction": "row",
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "center",
+                    "gap": 12,
+                    "inherit_color_scheme": true,
+                    "border": "none"
+                  },
+                  "blocks": {
+                    "icon-shipping": {
+                      "type": "icon",
+                      "settings": {
+                        "icon": "truck",
+                        "width": 18
+                      }
+                    },
+                    "text-shipping": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Free shipping across the US</p>",
+                        "type_preset": "paragraph-sm",
+                        "alignment": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      }
+                    }
+                  },
+                  "block_order": ["icon-shipping", "text-shipping"]
+                },
+                "perk-returns": {
+                  "type": "group",
+                  "settings": {
+                    "width": "custom",
+                    "custom_width": 100,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "content_direction": "row",
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "center",
+                    "gap": 12,
+                    "inherit_color_scheme": true,
+                    "border": "none"
+                  },
+                  "blocks": {
+                    "icon-returns": {
+                      "type": "icon",
+                      "settings": {
+                        "icon": "return",
+                        "width": 18
+                      }
+                    },
+                    "text-returns": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Processed &amp; shipped within 48 hours</p>",
+                        "type_preset": "paragraph-sm",
+                        "alignment": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      }
+                    }
+                  },
+                  "block_order": ["icon-returns", "text-returns"]
+                },
+                "perk-handcrafted": {
+                  "type": "group",
+                  "settings": {
+                    "width": "custom",
+                    "custom_width": 100,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "content_direction": "row",
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "center",
+                    "gap": 12,
+                    "inherit_color_scheme": true,
+                    "border": "none"
+                  },
+                  "blocks": {
+                    "icon-handcrafted": {
+                      "type": "icon",
+                      "settings": {
+                        "icon": "star",
+                        "width": 18
+                      }
+                    },
+                    "text-handcrafted": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Handwoven by master artisans in India</p>",
+                        "type_preset": "paragraph-sm",
+                        "alignment": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      }
+                    }
+                  },
+                  "block_order": ["icon-handcrafted", "text-handcrafted"]
+                }
+              },
+              "block_order": ["perk-shipping", "perk-returns", "perk-handcrafted"]
+            },
+            "description": {
+              "type": "product-description",
+              "settings": {
+                "padding-block-start": 12,
+                "padding-block-end": 4,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "accordion": {
+              "type": "accordion",
+              "settings": {},
+              "blocks": {
+                "row-fabric": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Fabric & craft"
+                  },
+                  "blocks": {
+                    "text": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Woven on traditional handlooms from premium grade silk and cotton. Each piece carries subtle slubs and variations that are hallmarks of handcrafted textiles.</p>"
+                      }
+                    }
+                  },
+                  "block_order": ["text"]
+                },
+                "row-care": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Care instructions"
+                  },
+                  "blocks": {
+                    "text": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Dry clean only for the first wash. Store folded in a cotton cover, away from direct sunlight. Iron on low heat with a cloth in between.</p>"
+                      }
+                    }
+                  },
+                  "block_order": ["text"]
+                },
+                "row-shipping": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Shipping & returns"
+                  },
+                  "blocks": {
+                    "text": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Dispatched in 48 hours. Free shipping across the US with delivery in 3–4 business days. All sales are final — please review the size guide before ordering.</p>"
+                      }
+                    }
+                  },
+                  "block_order": ["text"]
+                }
+              },
+              "block_order": ["row-fabric", "row-care", "row-shipping"]
+            }
+          },
+          "block_order": [
+            "breadcrumb",
+            "title",
+            "reviews",
+            "price",
+            "variant-picker",
+            "buy-buttons",
+            "perks",
+            "description",
+            "accordion"
+          ]
+        }
+      },
+      "block_order": ["media-gallery", "product-details"],
+      "settings": {
+        "content_width": "content-center-aligned",
+        "desktop_media_position": "left",
+        "equal_columns": false,
+        "limit_details_width": false,
+        "gap": 32,
+        "enable_sticky_add_to_cart": true,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 28,
+        "padding-block-end": 12
+      }
+    },
+    "product_recommendations_CDV8Jf": {
+      "type": "product-recommendations",
+      "blocks": {
+        "text_pRrJQ4": {
+          "type": "text",
+          "name": "t:names.header",
+          "settings": {
+            "text": "<h2>Related products</h2>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_wX98EU": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_cEwjc3": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_paQpDM": {
+              "type": "price",
+              "name": "t:names.product_price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_wX98EU",
+            "product_title_cEwjc3",
+            "price_paQpDM"
+          ]
+        }
+      },
+      "block_order": ["text_pRrJQ4"],
+      "name": "t:names.product_recommendations",
+      "settings": {
+        "product": "{{ closest.product }}",
+        "recommendation_type": "related",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "max_products": 4,
+        "columns": 4,
+        "mobile_columns": "2",
+        "columns_gap": 12,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "gap": 28,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    }
+  },
+  "order": ["main", "product_recommendations_CDV8Jf"]
+}

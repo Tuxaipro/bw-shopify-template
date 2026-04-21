@@ -5,6 +5,7 @@
       "blocks": {
         "media-gallery": {
           "type": "_product-media-gallery",
+          "static": true,
           "settings": {
             "media_presentation": "grid",
             "media_columns": "one",
@@ -30,6 +31,7 @@
         },
         "product-details": {
           "type": "_product-details",
+          "static": true,
           "settings": {
             "width": "custom",
             "custom_width": 100,
